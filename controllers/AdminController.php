@@ -1,6 +1,5 @@
 <?php
-class AdminController extends Controller
-{
+class AdminController extends Controller {
 
     // Admin login
     public function login()
@@ -48,14 +47,15 @@ class AdminController extends Controller
         $orders = $this->model('Order')->getAllOrders();
         $this->view('admin/manage_orders', ['orders' => $orders]);
     }
-
+    
 
 
     //view Item
-    public function viewProduct($id)
-    {
-        $product = $this->model('product')->getProductById($id);
-        $this->view('admin/product_view', ['product' => $product]);
+    public function viewProduct($id) {
+        
+        $product = $this->model('Product')->find($id);
+       // var_dump($product);
+        $this->view('admin/product_view',['product'=>$product]);
 
     }
 

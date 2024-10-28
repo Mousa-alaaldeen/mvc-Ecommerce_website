@@ -18,8 +18,6 @@ class Core {
         'admin/logout' => 'AdminController@logout',
         'admin/product_view' => 'AdminController@viewProduct',
 
-        
-
         // Super Admin Routes
         'super-admin/login' => 'SuperAdminController@login',
         'super-admin/dashboard' => 'SuperAdminController@dashboard',
@@ -52,23 +50,37 @@ class Core {
 
     private function dispatch() {
         $url = $this->getUrl();
-
-//        echo "DEBUG: Requested URL is '$url'<br>"; // Display parsed URL for debugging
-
-        if (isset($this->routes[$url])) {
-            $route = explode('@', $this->routes[$url]);
+        
+        // Split URL into parts
+        $urlParts = explode('/', $url);
+        $lastPart = end($urlParts);
+    
+        // Determine route path and optional ID
+        if (ctype_digit($lastPart)) {
+            $id = $lastPart;
+            $routePath = implode('/', array_slice($urlParts, 0, -1)); // Remove last part for route path
+        } else {
+            $routePath = $url; // Use full URL as route path
+            $id = null;         // No ID
+        }
+    
+        if (isset($this->routes[$routePath])) {
+            $route = explode('@', $this->routes[$routePath]);
             $controllerName = $route[0];
             $methodName = $route[1];
-
-//            echo "DEBUG: Dispatching to controller: $controllerName, method: $methodName<br>";
-
+    
             if (file_exists('controllers/' . $controllerName . '.php')) {
                 require_once 'controllers/' . $controllerName . '.php';
                 $controller = new $controllerName;
-
+    
                 if (method_exists($controller, $methodName)) {
-                    $controller->$methodName();
-                    return;  // End function after successful dispatch
+                    // Call the method with or without ID
+                    if ($id !== null) {
+                        $controller->$methodName($id);
+                    } else {
+                        $controller->$methodName();
+                    }
+                    return;
                 } else {
                     die("ERROR: Method $methodName not found in $controllerName.");
                 }
@@ -79,6 +91,7 @@ class Core {
             die("ERROR: Route not found for URL '$url'.");
         }
     }
+        
 
     private function getUrl() {
         $url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';

@@ -34,7 +34,11 @@ class Model
 
     public function find($id)
     {
-        $statement = $this->pdo->prepare("SELECT * FROM $this->table WHERE id = :id");
+        $singular = $this->singularize($this->table);
+        $id_field = $singular."_id";
+       
+
+        $statement = $this->pdo->prepare("SELECT * FROM $this->table WHERE $id_field =:id");
         $statement -> bindValue(':id', $id);
         $statement->execute();
         return $statement->fetch(\pdo::FETCH_ASSOC);
@@ -69,6 +73,14 @@ class Model
         $statement -> bindValue(':id', $id);
         $statement->execute();
 
+    }
+
+    function singularize($word) {
+        // Basic check for plural form and conversion to singular
+        if (substr($word, -1) === 's') {
+            return substr($word, 0, -1);
+        }
+        return $word;
     }
 
 }

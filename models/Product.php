@@ -26,26 +26,18 @@ class Product extends Model
         $statement->execute();
         return $statement->fetchAll(\pdo::FETCH_ASSOC);
     }
-    public function getAllProducts(){
+    public function getAllProducts()
+    {
         $statement = $this->pdo->prepare("
         SELECT *
         FROM
          $this->table ");
 
-          $statement->execute();
+        $statement->execute();
         return $statement->fetchAll(\pdo::FETCH_ASSOC);
 
     }
-    public function viewProduct($id) {
-        $statement = $this->pdo->prepare("
-            SELECT * 
-            FROM $table 
-            WHERE id = :id
-        ");
-    
-        $statement->execute(array(":id" => $id));
-    
-        return $statement->fetch(\PDO::FETCH_ASSOC);
-    }
-    
+
+ 
+
 }
