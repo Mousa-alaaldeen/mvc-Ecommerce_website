@@ -3,20 +3,15 @@
 
 <head>
 	<title>Portal - Bootstrap 5 Admin Dashboard Template For Developers</title>
-
 	<!-- Meta -->
 	<meta charset="utf-8">
-
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 	<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
 	<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
 	<link rel="shortcut icon" href="favicon.ico">
-
 	<!-- FontAwesome JS-->
 	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
-
 	<!-- Bootstrap CSS -->
 	<link href="public/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -27,7 +22,7 @@
 	<link href="/public/css/admin.css" rel="stylesheet">
 	<link href="/public/css/admin.css" rel="stylesheet">
 
-	
+
 </head>
 
 <body class="app">
@@ -220,8 +215,6 @@
 											d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
 									</svg>
 								</span>
-
-
 								<span class="nav-link-text">Overview</span>
 							</a><!--//nav-link-->
 						</li><!--//nav-item-->

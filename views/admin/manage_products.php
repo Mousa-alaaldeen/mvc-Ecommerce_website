@@ -1,4 +1,13 @@
-<?php require "views/partials/admin_header.php"; ?>
+<?php
+require "views/partials/admin_header.php";
+$items_per_page = 20;
+$current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+$current_page = max($current_page, 1);
+$start_index = ($current_page - 1) * $items_per_page;
+$paginated_products = array_slice($products, $start_index, $items_per_page);
+$total_items = count($products);
+$total_pages = ceil($total_items / $items_per_page);
+?>
 <div class="app-wrapper">
 	<div class="app-content pt-3 p-md-3 p-lg-4">
 		<div class="container-xl">
@@ -19,7 +28,7 @@
 										<button type="submit" class="btn app-btn-secondary">Search</button>
 									</div>
 								</form>
-							</div><!--//col-->
+							</div>
 							<div class="col-auto">
 								<select class="form-select w-auto">
 									<option selected="" value="option-1">All</option>
@@ -28,7 +37,6 @@
 									<option value="option-4">Spreadsheet</option>
 									<option value="option-5">Presentation</option>
 									<option value="option-6">Zip file</option>
-
 								</select>
 							</div>
 							<div class="col-auto">
@@ -41,77 +49,76 @@
 											d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
 									</svg>Upload File</a>
 							</div>
-						</div><!--//row-->
-					</div><!--//table-utilities-->
-				</div><!--//col-auto-->
-			</div><!--//row-->
-			<div class="container mt-4">
-				<table class="table table-hover table-striped table-bordered">
-					<thead class="bg-success text-white ">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="">
+				<table class="table table-hover table-borderless shadow-sm rounded">
+					<thead class="table-success">
 						<tr>
 							<th>ID</th>
-							<th>Product Name</th>
+							<th>Product Image</th>
+							<th class="text-start">Product Name</th>
 							<th>Description</th>
 							<th>Price</th>
 							<th>Stock</th>
 							<th>Rating</th>
-							<th>Action</th>
+							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ($products as $product): ?>
-							<tr class="product-row">
+						<?php foreach ($paginated_products as $product): ?>
+							<tr class="text-center">
 								<td><?php echo htmlspecialchars($product['product_id']); ?></td>
-								<td><?php echo htmlspecialchars($product['product_name']); ?></td>
-								<td><?php echo htmlspecialchars($product['description']); ?></td>
+								<td>
+									<img src='http://localhost/Ecommerce_website.github.io-/<?= !empty($product['image_url']) ? htmlspecialchars($product['image_url']) : 'path/to/default/image.jpg'; ?>'
+										class="img-thumbnail" style="max-width: 100px;">
+								</td>
+								<td class="text-truncate " style="max-width: 150px;"> 
+									<?php
+									$formattedName = str_replace('-', ' ', strtolower($product['product_name']));
+									$formattedName = ucwords($formattedName);
+									echo $formattedName;
+									?>
+								</td>
+								<td class="text-truncate" style="max-width: 150px;">
+									<?php echo htmlspecialchars($product['description']); ?></td>
 								<td>JD<?php echo number_format($product['price'], 2); ?></td>
 								<td><?php echo (int) $product['stock_quantity']; ?></td>
 								<td><?php echo number_format($product['average_rating'], 1); ?>/5</td>
 								<td>
-									<a href="/admin/product_view/<?= htmlspecialchars($product['product_id']); ?>" class="btn btn-success btn-sm">View</a>
+									<a href="/admin/product_view/<?= htmlspecialchars($product['product_id']); ?>"
+										class="btn btn-success btn-sm">View</a>
+									<a href="/admin/product_delete/<?= htmlspecialchars($product['product_id']); ?>"
+										class="btn btn-danger btn-sm ms-2">Delete</a>
 								</td>
 							</tr>
 						<?php endforeach; ?>
 					</tbody>
 				</table>
-
 			</div>
-
-			<nav class="app-pagination mt-5">
+			<nav class="app-pagination ">
 				<ul class="pagination justify-content-center">
-					<li class="page-item disabled">
-						<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+					<li class="page-item <?= $current_page <= 1 ? 'disabled' : '' ?>">
+						<a class="page-link" href="?page=<?= $current_page - 1 ?>" tabindex="-1"
+							aria-disabled="true">Previous</a>
 					</li>
-					<li class="page-item active"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item">
-						<a class="page-link" href="#">Next</a>
+					<?php for ($page = 1; $page <= $total_pages; $page++): ?>
+						<li class="page-item <?= $page == $current_page ? 'active' : '' ?>">
+							<a class="page-link" href="?page=<?= $page ?>"><?= $page ?></a>
+						</li>
+					<?php endfor; ?>
+					<li class="page-item <?= $current_page >= $total_pages ? 'disabled' : '' ?>">
+						<a class="page-link" href="?page=<?= $current_page + 1 ?>">Next</a>
 					</li>
 				</ul>
 			</nav>
 		</div>
 	</div>
-
-	<footer class="app-footer">
-		<div class="container text-center py-3">
-			<!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
-			<small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart"
-					style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com"
-					target="_blank">Xiaoying Riley</a> for developers</small>
-
-		</div>
-	</footer>
-
+	<?php require "views/partials/admin_footer.php"; ?>
 </div>
-
-
-
-
-
-<!-- Page Specific JS -->
 <script src="assets/js/app.js"></script>
-
 </body>
 
 </html>
