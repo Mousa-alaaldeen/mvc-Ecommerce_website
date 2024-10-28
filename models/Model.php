@@ -36,7 +36,6 @@ class Model
     {
         $singular = $this->singularize($this->table);
         $id_field = $singular."_id";
-       
 
         $statement = $this->pdo->prepare("SELECT * FROM $this->table WHERE $id_field =:id");
         $statement -> bindValue(':id', $id);
@@ -56,6 +55,7 @@ class Model
 
     public function update($id, $data)
     {
+
         $fields = '';
         foreach ($data as $key => $value) {
             $fields .= $key . '=:' . $key . ',';

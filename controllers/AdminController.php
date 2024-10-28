@@ -58,7 +58,7 @@ class AdminController extends Controller {
         $this->view('admin/product_view',['product'=>$product]);
 
     }
-
+    
     // Manage customers
     public function manageCustomers()
     {
