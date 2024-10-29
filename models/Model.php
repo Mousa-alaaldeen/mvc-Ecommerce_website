@@ -53,19 +53,24 @@ class Model
         $statement->execute($data);
     }
 
-    public function update($id, $data)
-    {
+        public function update($id, $data)
+        {
+            //dd($id);
+            $singular = $this->singularize($this->table);
+            $id_field = $singular."_id";
 
-        $fields = '';
-        foreach ($data as $key => $value) {
-            $fields .= $key . '=:' . $key . ',';
+            $fields = '';
+            foreach ($data as $key => $value) {
+                $fields .= $key . '=:' . $key . ',';
+            }
+            $data['id'] = $id;
+
+            $fields = rtrim($fields, ',');
+            $sql = "UPDATE $this->table SET $fields WHERE $id_field =:id";
+           // dd($fields);
+            $statement = $this->pdo->prepare($sql);
+            $statement->execute($data);
         }
-
-        $fields = rtrim($fields, ',');
-        $sql = "UPDATE $this->table SET $fields WHERE id = :id";
-        $statement = $this->pdo->prepare($sql);
-        $statement->execute($data);
-    }
 
     public function delete($id)
     {

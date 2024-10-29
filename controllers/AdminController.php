@@ -58,6 +58,49 @@ class AdminController extends Controller {
         $this->view('admin/product_view',['product'=>$product]);
 
     }
+
+    // public function updateProduct($id,$data) {
+        
+    //     $product = $this->model('Product')->update($id);
+    //    // var_dump($product);
+    //     $this->view('admin/product_update',['product'=>$product]);
+
+    // }
+    public function editProduct($id)
+{
+    $product = $this->model('Product')->find($id);
+    $this->view('admin/product_edit', ['product' => $product]);
+}
+
+public function updateProduct($id)
+{
+    
+  
+        //dd($id);
+        $data = [
+            'price' => $_POST['price'],
+            'description' => $_POST['description'],
+            'category_id' => $_POST['category_id'],
+            'average_rating' => $_POST['average_rating'],
+            'stock_quantity' => $_POST['stock_quantity'],
+        ];
+        $product = $this->model('Product')->find($id);
+    //dd($product);
+        
+        $this->model('Product')->update($id, $data);
+        
+
+        $_SESSION['message'] = "Product updated successfully!";
+    
+    
+
+    ;
+    $this->view('admin/product_edit', ['product' => $product]);
+
+    var_dump($_POST);
+exit;
+}
+
     
     // Manage customers
     public function manageCustomers()
