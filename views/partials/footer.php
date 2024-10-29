@@ -112,7 +112,6 @@
     </div>
 </footer>
 <!-- End Footer Section -->
- 
 
 <script src="../public/js/main.js"></script>
 <script src="../public/js/logout.js"></script>

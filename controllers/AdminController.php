@@ -1,5 +1,6 @@
 <?php
-class AdminController extends Controller {
+class AdminController extends Controller
+{
 
     // Admin login
     public function login()
@@ -33,7 +34,7 @@ class AdminController extends Controller {
         $categories = $this->model('Category')->getAllCategories();
         $this->view('admin/manage_category', ['categories' => $categories]);
     }
-   
+
 
     // Manage products
     public function manageProducts()
@@ -48,39 +49,41 @@ class AdminController extends Controller {
         $orders = $this->model('Order')->getAllOrders();
         $this->view('admin/manage_orders', ['orders' => $orders]);
     }
-    
+
 
 
     //view Item
-    public function viewProduct($id) {
+    public function viewProduct($id)
+    {
         $product = $this->model('Product')->find($id);
-       // var_dump($product);
-        $this->view('admin/product_view',['product'=>$product]);
+        // var_dump($product);
+        $this->view('admin/product_view', ['product' => $product]);
 
     }
-   
+
 
     // public function updateProduct($id,$data) {
-        
+
     //     $product = $this->model('Product')->update($id);
     //    // var_dump($product);
     //     $this->view('admin/product_update',['product'=>$product]);
 
     // }
     public function editProduct($id)
-{
-    $product = $this->model('Product')->find($id);
-    $this->view('admin/product_edit', ['product' => $product]);
-}
-public function gitCategory(){
-    $categories = $this->model('Product')->getProducts();
-    $this->view('admin/product_edit', ['Product' => $categories]);
-    
-}
+    {
+        $product = $this->model('Product')->find($id);
+        $this->view('admin/product_edit', ['product' => $product]);
+    }
+    public function gitCategory()
+    {
+        $categories = $this->model('Product')->getProducts();
+        $this->view('admin/product_edit', ['Product' => $categories]);
 
-public function updateProduct($id)
-{
-     //dd($id);
+    }
+
+    public function updateProduct($id)
+    {
+        //dd($id);
         $data = [
             'price' => $_POST['price'],
             'description' => $_POST['description'],
@@ -89,42 +92,60 @@ public function updateProduct($id)
             'stock_quantity' => $_POST['stock_quantity'],
         ];
         $product = $this->model('Product')->find($id);
-    //dd($product);
-        
+        //dd($product);
+
         $this->model('Product')->update($id, $data);
-        
+
 
         $_SESSION['message'] = "Product updated successfully!";
-    
-    
 
-    ;
-    $this->view('admin/product_edit', ['product' => $product]);
 
-    var_dump($_POST);
-exit;
-}
+
+        ;
+        $this->view('admin/product_edit', ['product' => $product]);
+
+        var_dump($_POST);
+        exit;
+    }
 
     //create Product
     public function createProduct()
     {
-       
-        $data = [
+        $categories = $this->model('Category')->getAllCategories();
+        // dd($categories);
+        $productData = [
             'product_name' => $_POST['product_name'],
             'price' => $_POST['price'],
             'description' => $_POST['description'],
             'category_id' => $_POST['category_id'],
-            'average_rating' => $_POST['average_rating'] ?? 0, 
+            'average_rating' => $_POST['average_rating'] ?? 0,
             'stock_quantity' => $_POST['stock_quantity'],
-            'image_url' => $_POST['image_url'] ?? 'default.jpg', 
         ];
-    
-        $this->model('Product')->createProduct($data);
-        $_SESSION['message'] = "Product created successfully!";
-        header('Location: /admin/products_view');
+        $productId = $this->model('Product')->create($productData);
+        $uploadDir = 'uploads/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        if ($productId && isset($_FILES['image_url']) && $_FILES['image_url']['error'] == 0) {
+            $imageName = basename($_FILES['image_url']['name']);
+            $imagePath = $uploadDir . $imageName;
+            if (move_uploaded_file($_FILES['image_url']['tmp_name'], $imagePath)) {
+                $imageData = [
+                    'product_id' => $productId,
+                    'image_url' => $imagePath,
+                ];
+                $this->model('ProductImage')->create($imageData);
+                $_SESSION['message'] = "Product created successfully!";
+            } else {
+                $_SESSION['message'] = "Failed to upload image.";
+            }
+        } else {
+            $_SESSION['message'] = "Failed to create product or upload image.";
+        }
+        header('Location: /admin/manage_products');
         exit;
     }
-    
+
 
     // Manage customers
     public function manageCustomers()

@@ -21,10 +21,7 @@
 	<link href="/public/css/tiny-slider.css" rel="stylesheet">
 	<link href="/public/css/admin.css" rel="stylesheet">
 	<link href="/public/css/admin.css" rel="stylesheet">
-
-
 </head>
-
 <body class="app">
 	<header class="app-header fixed-top">
 		<div class="app-header-inner">
@@ -198,9 +195,7 @@
 				<div class="app-branding">
 					<a class="app-logo" href="index.php"><img class="logo-icon me-2" src="assets/images/app-logo.svg"
 							alt="logo"><span class="logo-text">PORTAL</span></a>
-
 				</div><!--//app-branding-->
-
 				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
 					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
 						<li class="nav-item">
@@ -233,7 +228,6 @@
 								<span class="nav-link-text">Products</span>
 							</a><!--//nav-link-->
 						</li><!--//nav-item-->
-
 						</li><!--//nav-item-->
 						<li class="nav-item">
 							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
@@ -250,7 +244,6 @@
 								<span class="nav-link-text">Customers</span>
 							</a><!--//nav-link-->
 						</li><!--//nav-item-->
-
 						<li class="nav-item">
 							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 							<a class="nav-link" href="categories.php">
@@ -352,8 +345,6 @@
 								</ul>
 							</div>
 						</li><!--//nav-item-->
-
-
 						<li class="nav-item">
 							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 							<a class="nav-link" href="charts.html">
@@ -367,7 +358,6 @@
 								<span class="nav-link-text">Charts</span>
 							</a><!--//nav-link-->
 						</li><!--//nav-item-->
-
 						<li class="nav-item">
 							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 							<a class="nav-link" href="help.html">
@@ -438,5 +428,5 @@
 					</nav>
 				</div>
 			</div><!--//sidepanel-inner-->
-		</div><!--//app-sidepanel-->
-	</header><!--//app-header-->
+		</div>
+	</header>

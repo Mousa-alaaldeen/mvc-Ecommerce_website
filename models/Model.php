@@ -25,7 +25,7 @@ class Model
         }
     }
 
-    public function all ()
+    public function all()
     {
         $statement = $this->pdo->prepare("SELECT * FROM $this->table");
         $statement->execute();
@@ -50,6 +50,7 @@ class Model
         $sql = "INSERT INTO $this->table ($keys) VALUES ($tags)";
         $statement = $this->pdo->prepare($sql);
         $statement->execute($data);
+        return $this->pdo->lastInsertId();
     }
     
 

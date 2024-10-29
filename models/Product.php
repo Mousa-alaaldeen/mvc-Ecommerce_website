@@ -1,6 +1,6 @@
 <?php
 
-require 'models/Model.php';
+require_once 'models/Model.php';
 
 class Product extends Model
 {
@@ -38,19 +38,7 @@ class Product extends Model
 
     }
 
-    public function createProduct()
-    {
-        $statement = $this->pdo->prepare("
-         INSERT INTO products 
-                (product_name, description, price, category_id, average_rating, stock_quantity, created_at, updated_at) 
-                VALUES 
-                (product_name, :description, :price, :category_id, :average_rating, :stock_quantity, NOW(), NOW())
-        ");
-        $statement->execute();
-        return $statement->fetch(\PDO::FETCH_ASSOC);
-        
-    }
-
+  
 
  
 
