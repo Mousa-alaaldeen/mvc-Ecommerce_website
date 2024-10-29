@@ -1,13 +1,24 @@
 <?php
 require "views/partials/admin_header.php";
+$search_query = isset($_GET['search']) ? $_GET['search'] : '';
+$filtered_products = array_filter($products, function ($product) use ($search_query) {
+	return stripos($product['product_name'], $search_query) !== false ||
+		stripos($product['description'], $search_query) !== false;
+});
+
+if ($search_query === '') {
+	$filtered_products = $products;
+}
+
 $items_per_page = 20;
 $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $current_page = max($current_page, 1);
 $start_index = ($current_page - 1) * $items_per_page;
-$paginated_products = array_slice($products, $start_index, $items_per_page);
-$total_items = count($products);
+$paginated_products = array_slice($filtered_products, $start_index, $items_per_page);
+$total_items = count($filtered_products);
 $total_pages = ceil($total_items / $items_per_page);
 ?>
+
 <div class="app-wrapper">
 	<div class="app-content pt-3 p-md-3 p-lg-4">
 		<div class="container-xl">
@@ -19,9 +30,10 @@ $total_pages = ceil($total_items / $items_per_page);
 					<div class="page-utilities">
 						<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
 							<div class="col-auto">
-								<form class="docs-search-form row gx-1 align-items-center">
+								<form class="docs-search-form row gx-1 align-items-center" method="GET" action="">
 									<div class="col-auto">
-										<input type="text" id="search-docs" name="searchdocs"
+										<input type="text" id="search-docs" name="search"
+											value="<?= htmlspecialchars($search_query) ?>"
 											class="form-control search-docs" placeholder="Search">
 									</div>
 									<div class="col-auto">
@@ -29,96 +41,236 @@ $total_pages = ceil($total_items / $items_per_page);
 									</div>
 								</form>
 							</div>
+							 <div class="modal fade" id="editProfileModal" tabindex="-1"
+                            aria-labelledby="editProfileModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="/admin/product_update/<?= htmlspecialchars($product['id']); ?>"
+                                        method="POST">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editProfileModalLabel">Edit Product</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Product ID</label>
+                                                    <input type="text" class="form-control" name="id"
+                                                        value="<?= htmlspecialchars($product['id']); ?>" readonly>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Price</label>
+                                                    <input type="text" class="form-control" name="price"
+                                                        value="<?= htmlspecialchars($product['price']); ?>">
+                                                </div>
+                                                <div class="col-md-12 mt-3">
+                                                    <label>Description</label>
+                                                    <textarea class="form-control" name="description"
+                                                        rows="2"><?= htmlspecialchars($product['description']); ?></textarea>
+                                                </div>
+                                                <div class="col-md-6 mt-3">
+                                                    <label>Category ID</label>
+                                                    <input type="" class="form-control" name="category_id"
+                                                        value="<?= htmlspecialchars($product['category_id']); ?>">
+                                                </div>
+                                                <div class="col-md-6 mt-3">
+                                                    <label>Average Rating</label>
+                                                    <input type="text" class="form-control" name="average_rating"
+                                                        value="<?= htmlspecialchars($product['average_rating']); ?>">
+                                                </div>
+                                                <div class="col-md-6 mt-3">
+                                                    <label>Stock Quantity</label>
+                                                    <input type="text" class="form-control" name="stock_quantity"
+                                                        value="<?= htmlspecialchars($product['stock_quantity']); ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+<!-- "Create" Button -->
+<a class="btn app-btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#createProductModal">
+    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle me-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm3.5-7.5a.5.5 0 0 1-.5.5H9v2.5a.5.5 0 0 1-1 0V8H5.5a.5.5 0 0 1 0-1H8V4.5a.5.5 0 0 1 1 0V7h2.5a.5.5 0 0 1 .5.5z" />
+    </svg>Create
+</a>
+
+<!-- Create Product Modal -->
+<div class="modal fade" id="createProductModal" tabindex="-1" aria-labelledby="createProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/admin/product_create" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createProductModalLabel">Create New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="product_name" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" id="product_name" name="product_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="text" class="form-control" id="price" name="price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="2" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category_id" class="form-label">Category ID</label>
+                        <input type="text" class="form-control" id="category_id" name="category_id" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="average_rating" class="form-label">Average Rating</label>
+                        <input type="text" class="form-control" id="average_rating" name="average_rating">
+                    </div>
+                    <div class="mb-3">
+                        <label for="stock_quantity" class="form-label">Stock Quantity</label>
+                        <input type="text" class="form-control" id="stock_quantity" name="stock_quantity" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Product</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+							
 							<div class="col-auto">
-								<select class="form-select w-auto">
-									<option selected="" value="option-1">All</option>
-									<option value="option-2">Text file</option>
-									<option value="option-3">Image</option>
-									<option value="option-4">Spreadsheet</option>
-									<option value="option-5">Presentation</option>
-									<option value="option-6">Zip file</option>
-								</select>
-							</div>
-							<div class="col-auto">
-								<a class="btn app-btn-primary" href="#"><svg width="1em" height="1em"
-										viewBox="0 0 16 16" class="bi bi-upload me-2" fill="currentColor"
-										xmlns="http://www.w3.org/2000/svg">
+								<a class="btn app-btn-primary" href="#" onclick="showProductDetails()">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle me-2"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 										<path fill-rule="evenodd"
-											d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-										<path fill-rule="evenodd"
-											d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
-									</svg>Upload File</a>
+											d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm3.5-7.5a.5.5 0 0 1-.5.5H9v2.5a.5.5 0 0 1-1 0V8H5.5a.5.5 0 0 1 0-1H8V4.5a.5.5 0 0 1 1 0V7h2.5a.5.5 0 0 1 .5.5z" />
+									</svg>Create
+								</a>
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>
-			<div class="">
-				<table class="table table-hover table-borderless shadow-sm rounded">
-					<thead class="table-success">
-						<tr>
-							<th>ID</th>
-							<th>Product Image</th>
-							<th class="text-start">Product Name</th>
-							<th>Description</th>
-							<th>Price</th>
-							<th>Stock</th>
-							<th>Rating</th>
-							<th>Actions</th>
+			<table class="table table-hover table-borderless shadow-sm rounded">
+				<thead class="table-success">
+					<tr class="text-center">
+						<th>ID</th>
+						<th>Image</th>
+						<th>Product Name</th>
+						<th>Description</th>
+						<th>Price</th>
+						<th>Average Rating</th>
+						<th>Stock Quantity</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($paginated_products as $product): ?>
+						<tr class="text-center">
+							<td><?php echo htmlspecialchars($product['id']); ?></td>
+							<td>
+								<img src='http://localhost/Ecommerce_website.github.io-/<?= !empty($product['image_url']) ? htmlspecialchars($product['image_url']) : 'path/to/default/image.jpg'; ?>'
+									class="img-thumbnail" style="max-width: 100px;">
+							</td>
+							<td class="text-truncate" style="max-width: 150px;">
+								<?php
+								$formattedName = str_replace('-', ' ', strtolower($product['product_name']));
+								$formattedName = ucwords($formattedName);
+								echo $formattedName;
+								?>
+							</td>
+							<td class="text-truncate" style="max-width: 150px;">
+								<?php echo htmlspecialchars($product['description']); ?>
+							</td>
+							<td>JD<?php echo number_format($product['price'], 2); ?></td>
+							<td><?php echo number_format($product['average_rating'], 1); ?>/5</td>
+							<td><?php echo (int) $product['stock_quantity']; ?></td>
+
+							<td>
+								<a href="/admin/product_edit/<?= htmlspecialchars($product['id']); ?>"
+									class="btn btn-success btn-sm">View</a>
+								<a href="/admin/product_delete/<?= htmlspecialchars($product['id']); ?>"
+									class="btn btn-danger btn-sm ms-2">Delete</a>
+							</td>
 						</tr>
-					</thead>
-					<tbody>
-						<?php foreach ($paginated_products as $product): ?>
-							<tr class="text-center">
-								<td><?php echo htmlspecialchars($product['product_id']); ?></td>
-								<td>
-									<img src='http://localhost/Ecommerce_website.github.io-/<?= !empty($product['image_url']) ? htmlspecialchars($product['image_url']) : 'path/to/default/image.jpg'; ?>'
-										class="img-thumbnail" style="max-width: 100px;">
-								</td>
-								<td class="text-truncate " style="max-width: 150px;"> 
-									<?php
-									$formattedName = str_replace('-', ' ', strtolower($product['product_name']));
-									$formattedName = ucwords($formattedName);
-									echo $formattedName;
-									?>
-								</td>
-								<td class="text-truncate" style="max-width: 150px;">
-									<?php echo htmlspecialchars($product['description']); ?></td>
-								<td>JD<?php echo number_format($product['price'], 2); ?></td>
-								<td><?php echo (int) $product['stock_quantity']; ?></td>
-								<td><?php echo number_format($product['average_rating'], 1); ?>/5</td>
-								<td>
-									<a href="/admin/product_view/<?= htmlspecialchars($product['product_id']); ?>"
-										class="btn btn-success btn-sm">View</a>
-									<a href="/admin/product_delete/<?= htmlspecialchars($product['product_id']); ?>"
-										class="btn btn-danger btn-sm ms-2">Delete</a>
-								</td>
-							</tr>
-						<?php endforeach; ?>
-					</tbody>
-				</table>
-			</div>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
 			<nav class="app-pagination ">
 				<ul class="pagination justify-content-center">
 					<li class="page-item <?= $current_page <= 1 ? 'disabled' : '' ?>">
-						<a class="page-link" href="?page=<?= $current_page - 1 ?>" tabindex="-1"
+						<a class="page-link bg-primary text-white"
+							href="?page=<?= $current_page - 1 ?>&search=<?= urlencode($search_query) ?>" tabindex="-1"
 							aria-disabled="true">Previous</a>
 					</li>
 					<?php for ($page = 1; $page <= $total_pages; $page++): ?>
 						<li class="page-item <?= $page == $current_page ? 'active' : '' ?>">
-							<a class="page-link" href="?page=<?= $page ?>"><?= $page ?></a>
+							<a class="page-link <?= $page == $current_page ? 'bg-success text-white' : 'bg-light text-dark' ?>"
+								href="?page=<?= $page ?>&search=<?= urlencode($search_query) ?>"><?= $page ?></a>
 						</li>
 					<?php endfor; ?>
 					<li class="page-item <?= $current_page >= $total_pages ? 'disabled' : '' ?>">
-						<a class="page-link" href="?page=<?= $current_page + 1 ?>">Next</a>
+						<a class="page-link bg-primary text-white"
+							href="?page=<?= $current_page + 1 ?>&search=<?= urlencode($search_query) ?>">Next</a>
 					</li>
 				</ul>
 			</nav>
-		</div>
-	</div>
-	<?php require "views/partials/admin_footer.php"; ?>
-</div>
-<script src="assets/js/app.js"></script>
-</body>
+			<?php require "views/partials/admin_footer.php"; ?>
 
-</html>
+		</div>
+		
+	</div>
+
+	
+</div>
+
+<script src="assets/js/app.js"></script>
+   <!-- SweetAlert Script -->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- JavaScript -->
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script>
+	function updateUserProfile() {
+		Swal.fire({
+			title: 'Success!',
+			text: 'Your profile has been updated.',
+			icon: 'success',
+			confirmButtonColor: '#3B5D50'
+		});
+	}
+
+	function removeItem(itemName) {
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You want to remove " + itemName + " from your wishlist!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: 'Yes, remove it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				Swal.fire({
+					title: 'Removed!',
+					text: itemName + ' has been removed from your wishlist.',
+					icon: 'success',
+					confirmButtonColor: '#3B5D50'
+				}
+				);
+
+			}
+		});
+	}
+</script>

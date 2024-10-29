@@ -19,7 +19,7 @@ class Core {
         'admin/product_view' => ['AdminController@viewProduct', 'GET'],
         'admin/product_edit' => ['AdminController@editProduct', 'GET'], // Specify POST for updates
         'admin/product_update' => ['AdminController@updateProduct', 'POST'], // Specify POST for updates
-
+'admin/product_create' => ['AdminController@createProduct', 'POST'],
         // Super Admin Routes
         'super-admin/login' => ['SuperAdminController@login', 'POST'],
         'super-admin/dashboard' => ['SuperAdminController@dashboard', 'GET'],
@@ -53,7 +53,7 @@ class Core {
     private function dispatch() {
         $url = $this->getUrl();
         $method = $_SERVER['REQUEST_METHOD']; // Get the current request method
-        var_dump($method);
+        // var_dump($method);
         
         // Split URL into parts
         $urlParts = explode('/', $url);
@@ -63,7 +63,7 @@ class Core {
         if (ctype_digit($lastPart)) {
             $id = $lastPart;
             $routePath = implode('/', array_slice($urlParts, 0, -1)); // Remove last part for route path
-        var_dump($routePath);
+        // var_dump($routePath);
         } else {
             $routePath = $url; // Use full URL as route path
             $id = null;         // No ID
@@ -72,7 +72,7 @@ class Core {
         if (isset($this->routes[$routePath])) {
             $route = $this->routes[$routePath];
             $controllerMethod = explode('@', $route[0]);
-            var_dump($controllerMethod[0]);
+            // var_dump($controllerMethod[0]);
             $controllerName = $controllerMethod[0];
             $methodName = $controllerMethod[1];
             $routeMethod = $route[1] ?? 'GET'; // Default to GET if no method is specified

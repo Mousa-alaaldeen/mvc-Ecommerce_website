@@ -33,6 +33,7 @@ class AdminController extends Controller {
         $categories = $this->model('Category')->getAllCategories();
         $this->view('admin/manage_category', ['categories' => $categories]);
     }
+   
 
     // Manage products
     public function manageProducts()
@@ -52,12 +53,12 @@ class AdminController extends Controller {
 
     //view Item
     public function viewProduct($id) {
-        
         $product = $this->model('Product')->find($id);
        // var_dump($product);
         $this->view('admin/product_view',['product'=>$product]);
 
     }
+   
 
     // public function updateProduct($id,$data) {
         
@@ -71,12 +72,15 @@ class AdminController extends Controller {
     $product = $this->model('Product')->find($id);
     $this->view('admin/product_edit', ['product' => $product]);
 }
+public function gitCategory(){
+    $categories = $this->model('Product')->getProducts();
+    $this->view('admin/product_edit', ['Product' => $categories]);
+    
+}
 
 public function updateProduct($id)
 {
-    
-  
-        //dd($id);
+     //dd($id);
         $data = [
             'price' => $_POST['price'],
             'description' => $_POST['description'],
@@ -101,7 +105,27 @@ public function updateProduct($id)
 exit;
 }
 
+    //create Product
+    public function createProduct()
+    {
+       
+        $data = [
+            'product_name' => $_POST['product_name'],
+            'price' => $_POST['price'],
+            'description' => $_POST['description'],
+            'category_id' => $_POST['category_id'],
+            'average_rating' => $_POST['average_rating'] ?? 0, 
+            'stock_quantity' => $_POST['stock_quantity'],
+            'image_url' => $_POST['image_url'] ?? 'default.jpg', 
+        ];
     
+        $this->model('Product')->createProduct($data);
+        $_SESSION['message'] = "Product created successfully!";
+        header('Location: /admin/products_view');
+        exit;
+    }
+    
+
     // Manage customers
     public function manageCustomers()
     {

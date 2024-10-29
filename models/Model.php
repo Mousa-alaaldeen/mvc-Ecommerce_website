@@ -34,10 +34,9 @@ class Model
 
     public function find($id)
     {
-        $singular = $this->singularize($this->table);
-        $id_field = $singular."_id";
+      
 
-        $statement = $this->pdo->prepare("SELECT * FROM $this->table WHERE $id_field =:id");
+        $statement = $this->pdo->prepare("SELECT * FROM $this->table WHERE id =:id");
         $statement -> bindValue(':id', $id);
         $statement->execute();
         return $statement->fetch(\pdo::FETCH_ASSOC);
@@ -52,12 +51,13 @@ class Model
         $statement = $this->pdo->prepare($sql);
         $statement->execute($data);
     }
+    
 
         public function update($id, $data)
         {
             //dd($id);
-            $singular = $this->singularize($this->table);
-            $id_field = $singular."_id";
+            // $singular = $this->singularize($this->table);
+            // $id_field = $singular."_id";
 
             $fields = '';
             foreach ($data as $key => $value) {
@@ -66,7 +66,7 @@ class Model
             $data['id'] = $id;
 
             $fields = rtrim($fields, ',');
-            $sql = "UPDATE $this->table SET $fields WHERE $id_field =:id";
+            $sql = "UPDATE $this->table SET $fields WHERE id =:id";
            // dd($fields);
             $statement = $this->pdo->prepare($sql);
             $statement->execute($data);
