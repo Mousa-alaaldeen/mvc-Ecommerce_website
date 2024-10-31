@@ -7,61 +7,58 @@
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="main-container">
                     <!-- Profile Card -->
-                    <div class="card">
-                        <div class="m-4 d-flex justify-content-between align-items-center">
-                            <img src="<?= htmlspecialchars($customer['image_url']);?>"
-                                alt="Profile Image" class="rounded-circle" style="width: 100px; height: 100px;">
+                    <div class="card shadow-lg border-0">
+    <div class="m-4 d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <img src="<?= htmlspecialchars($customer['image_url']); ?>" 
+                alt="Profile Image" class="rounded-circle" style="width: 100px; height: 100px;">
+            <h3 class="text-success ms-3">
+                <?php
+                $formattedName = str_replace('-', ' ', strtolower($customer['username']));
+                $formattedName = ucwords($formattedName);
+                echo htmlspecialchars($formattedName);
+                ?>
+            </h3>
+        </div>
+        <button class="btn btn-success text-white" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+            Edit Customer
+        </button>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label>Customer ID</label>
+                <input type="text" class="form-control" 
+                    value="<?= htmlspecialchars($customer['id']); ?>" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Email</label>
+                <input type="text" class="form-control" 
+                    value="<?= htmlspecialchars($customer['email']); ?>" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>First Name</label>
+                <input type="text" class="form-control" 
+                    value="<?= htmlspecialchars($customer['first_name']); ?>" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Last Name</label>
+                <input type="text" class="form-control" 
+                    value="<?= htmlspecialchars($customer['last_name']); ?>" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Phone Number</label>
+                <input type="text" class="form-control" 
+                    value="<?= htmlspecialchars($customer['phone_number']); ?>" readonly>
+            </div>
+            <div class="col-md-12 mt-3">
+                <label>Address</label>
+                <textarea class="form-control" rows="2" readonly><?= htmlspecialchars($customer['address']); ?></textarea>
+            </div>
+        </div>
+    </div>
+</div>
 
-                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                                Edit Customer
-                            </button>
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center mb-3">
-                                <h3 class="text-success ">
-                                    <?php
-                                    $formattedName = str_replace('-', ' ', strtolower($customer['username']));
-                                    $formattedName = ucwords($formattedName);
-                                    echo $formattedName;
-                                    ?>
-                                </h3>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label>Customer ID</label>
-                                    <input type="text" class="form-control"
-                                        value="<?= htmlspecialchars($customer['id']); ?>" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Email</label>
-                                    <input type="text" class="form-control"
-                                        value="<?= htmlspecialchars($customer['email']); ?>" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>First Name</label>
-                                    <input type="text" class="form-control"
-                                        value="<?= htmlspecialchars($customer['first_name']); ?>" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Last Name</label>
-                                    <input type="text" class="form-control"
-                                        value="<?= htmlspecialchars($customer['last_name']); ?>" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Phone Number</label>
-                                    <input type="text" class="form-control"
-                                        value="<?= htmlspecialchars($customer['phone_number']); ?>" readonly>
-                                </div>
-                              
-                                <div class="col-md-12 mt-3">
-                                    <label>Address</label>
-                                    <textarea class="form-control" rows="2"
-                                        readonly><?= htmlspecialchars($customer['address']); ?></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Edit Customer Modal -->
                     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"

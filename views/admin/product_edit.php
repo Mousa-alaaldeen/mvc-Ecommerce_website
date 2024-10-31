@@ -4,66 +4,64 @@
         <div class="container-xl">
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="main-container">
-                    <div class="card">
-                        <div class="m-4 d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center">
-                                <img src="../images/shahed.jpeg" alt="Product Image" class="rounded-circle"
-                                    style="width: 100px; height: 100px;">
-                                <h3 class=" text-success ms-3">
-                                    <?php
-                                    $formattedName = str_replace('-', ' ', strtolower($product['product_name']));
-                                    $formattedName = ucwords($formattedName);
-                                    echo htmlspecialchars($formattedName);
-                                    ?>
-                                </h3>
-                            </div>
+                <div class="card shadow-lg border-0">
+    <div class="d-flex justify-content-between align-items-center p-4">
+        <div class="d-flex align-items-center">
+            <img src="../images/shahed.jpeg" alt="Product Image" class="rounded-circle"
+                style="width: 100px; height: 100px;">
+            <h3 class="text-success ms-3 fw-bold">
+                <?php
+                $formattedName = str_replace('-', ' ', strtolower($product['product_name']));
+                $formattedName = ucwords($formattedName);
+                echo htmlspecialchars($formattedName);
+                ?>
+            </h3>
+        </div>
+        <button class="btn btn-success text-white" data-bs-toggle="modal"
+            data-bs-target="#editProductModal">
+            Edit Product
+        </button>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Product ID</label>
+                <input type="text" class="form-control" 
+                    value="<?php echo htmlspecialchars($product['id']); ?>" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Average Rating</label>
+                <input type="text" class="form-control" 
+                    value="<?php echo htmlspecialchars($product['average_rating']); ?>" readonly>
+            </div>
+            <div class="col-md-12 mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" rows="6" readonly><?php echo htmlspecialchars($product['description']); ?></textarea>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Price</label>
+                <input type="text" class="form-control" 
+                    value="$<?php echo htmlspecialchars($product['price']); ?>" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Stock Quantity</label>
+                <input type="text" class="form-control" 
+                    value="<?php echo htmlspecialchars($product['stock_quantity']); ?>" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Created At</label>
+                <input type="text" class="form-control" 
+                    value="<?php echo htmlspecialchars($product['created_at']); ?>" readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Updated At</label>
+                <input type="text" class="form-control" 
+                    value="<?php echo htmlspecialchars($product['updated_at']); ?>" readonly>
+            </div>
+        </div>
+    </div>
+</div>
 
-                            <button class="btn btn-success text-white " data-bs-toggle="modal"
-                                data-bs-target="#editProductModal">
-                                Edit Product
-                            </button>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label>Product ID</label>
-                                    <input type="text" class="form-control"
-                                        value="<?php echo htmlspecialchars($product['id']); ?>" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Average Rating</label>
-                                    <input type="text" class="form-control"
-                                        value="<?php echo htmlspecialchars($product['average_rating']); ?>" readonly>
-                                </div>
-                                <div class="col-md-12 mb-3">
-                                    <label>Description</label>
-                                    <textarea class="form-control" rows="6"
-                                        readonly><?php echo htmlspecialchars($product['description']); ?></textarea>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Price</label>
-                                    <input type="text" class="form-control"
-                                        value="$<?php echo htmlspecialchars($product['price']); ?>" readonly>
-                                </div>
-                                
-                                <div class="col-md-6 mb-3">
-                                    <label>Stock Quantity</label>
-                                    <input type="text" class="form-control"
-                                        value="<?php echo htmlspecialchars($product['stock_quantity']); ?>" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Created At</label>
-                                    <input type="text" class="form-control"
-                                        value="<?php echo htmlspecialchars($product['created_at']); ?>" readonly>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Updated At</label>
-                                    <input type="text" class="form-control"
-                                        value="<?php echo htmlspecialchars($product['updated_at']); ?>" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Edit Product Modal -->
 
