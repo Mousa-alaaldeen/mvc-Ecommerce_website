@@ -32,31 +32,27 @@ $total_pages = ceil($total_items / $items_per_page);
 					<div class="page-utilities">
 						<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
 							<div class="col-auto">
-								<form class="docs-search-form row gx-1 align-items-center" method="GET" action="">
-									<div class="col-auto">
-										<input type="text" id="search-docs" name="search"
-											value="<?= htmlspecialchars($search_query) ?>"
-											class="form-control search-docs" placeholder="Search">
-									</div>
-									<div class="col-auto">
-										<button type="submit" class="btn app-btn-secondary">Search</button>
-									</div>
+								<form class="d-flex align-items-center" method="GET" action="">
+									<input type="text" id="search-docs" name="search"
+										value="<?= htmlspecialchars($search_query) ?>"
+										class="form-control me-2 rounded-pill border-primary" placeholder="Search..."
+										aria-label="Search">
+									<button type="submit" class="btn btn-warning rounded-pill">
+										<i class="fas fa-search text-dark"></i>
+									</button>
 								</form>
 							</div>
 							<!-- Create Product Modal Trigger -->
 							<div class="col-auto">
-								<a class="btn app-btn-primary" href="#" data-bs-toggle="modal"
+								<a class="btn btn-success d-flex align-items-center" href="#" data-bs-toggle="modal"
 									data-bs-target="#createProductModal">
-									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle me-2"
-										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-										<path fill-rule="evenodd"
-											d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm3.5-7.5a.5.5 0 0 1-.5.5H9v2.5a.5.5 0 0 1-1 0V8H5.5a.5.5 0 0 1 0-1H8V4.5a.5.5 0 0 1 1 0V7h2.5a.5.5 0 0 1 .5.5z" />
-									</svg>Create New Product
+									<i class="fas fa-plus me-2"></i> Create New Product
 								</a>
 							</div>
 						</div>
 					</div>
 				</div>
+
 			</div>
 			<!-- Edit Product Modal -->
 			<!-- <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
@@ -120,9 +116,8 @@ $total_pages = ceil($total_items / $items_per_page);
 							enctype="multipart/form-data">
 							<div class="modal-header p-0">
 								<div
-									class="w-100 bg-primary text-white p-2 d-flex justify-content-between align-items-center">
-									<h5 class="modal-title text-white" id="createProductModalLabel">Create New Product
-									</h5>
+									class="w-100 bg-success text-white p-2 d-flex justify-content-between align-items-center">
+									<h5 class="modal-title" id="createProductModalLabel">Create New Product</h5>
 									<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
@@ -130,29 +125,30 @@ $total_pages = ceil($total_items / $items_per_page);
 							<div class="modal-body">
 								<div class="mb-3">
 									<label for="product_name" class="form-label">Product Name</label>
-									<input type="text" class="form-control" id="product_name" name="product_name">
+									<input type="text" class="form-control" id="product_name" name="product_name"
+										required>
 								</div>
 								<div class="mb-3">
 									<label for="description" class="form-label">Description</label>
-									<textarea class="form-control" id="description" name="description"
-										rows="2"></textarea>
+									<textarea class="form-control" id="description" name="description" rows="2"
+										required></textarea>
 								</div>
 								<div class="row mb-3">
 									<div class="col">
-										<label for="price" class="form-label">Price</label>
-										<input type="number" class="form-control" id="price" name="price" step="0.01">
+										<label for="price" class="form-label">Price (JD)</label>
+										<input type="number" class="form-control" id="price" name="price" step="0.01"
+											required>
 									</div>
 									<div class="col">
 										<label for="stock_quantity" class="form-label">Stock Quantity</label>
 										<input type="number" class="form-control" id="stock_quantity"
-											name="stock_quantity">
+											name="stock_quantity" required>
 									</div>
 								</div>
 								<div class="mb-3">
 									<label for="category_id" class="form-label">Category</label>
-									<select class="form-select" id="category_id" name="category_id">
+									<select class="form-select" id="category_id" name="category_id" required>
 										<option value="" disabled selected>Select a category</option>
-										<?php var_dump($categories) ?>
 										<?php foreach ($categories as $category): ?>
 											<option value="<?php echo htmlspecialchars($category['id']); ?>">
 												<?php echo htmlspecialchars($category['category_name']); ?>
@@ -163,11 +159,11 @@ $total_pages = ceil($total_items / $items_per_page);
 								<div class="mb-3">
 									<label for="image_url" class="form-label">Product Image</label>
 									<input type="file" class="form-control" id="image_url" name="image_url"
-										accept="image/*">
+										accept="image/*" required>
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="submit" class="btn app-btn-primary">Save Product</button>
+								<button type="submit" class="btn btn-success">Save Product</button>
 								<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
 							</div>
 						</form>
@@ -209,10 +205,10 @@ $total_pages = ceil($total_items / $items_per_page);
 							<td><?php echo number_format($product['average_rating'], 1); ?>/5</td>
 							<td><?php echo (int) $product['stock_quantity']; ?></td>
 							<td>
-								<div class="d-flex align-items-center">
+								<div class="d-flex justify-content-center">
 									<a href="/admin/product_edit/<?= htmlspecialchars($product['id']); ?>"
 										class="btn btn-success btn-sm me-2">
-										<i class="bi bi-eye"></i>
+										<i class="bi bi-pencil"></i>
 									</a>
 									<form id="deleteForm-<?= htmlspecialchars($product['id']); ?>"
 										action="/admin/deleteProduct" method="POST"
@@ -224,12 +220,12 @@ $total_pages = ceil($total_items / $items_per_page);
 										</button>
 									</form>
 								</div>
-
 							</td>
 						</tr>
 					<?php endforeach; ?>
 				</tbody>
 			</table>
+
 			<nav class="app-pagination ">
 				<ul class="pagination justify-content-center">
 					<li class="page-item <?= $current_page <= 1 ? 'disabled' : '' ?>">
@@ -255,25 +251,25 @@ $total_pages = ceil($total_items / $items_per_page);
 </div>
 
 <script>
-    function confirmDelete(event, customerId) {
-        event.preventDefault(); // Prevent the form from submitting immediately
+	function confirmDelete(event, customerId) {
+		event.preventDefault(); // Prevent the form from submitting immediately
 
-        // Trigger SweetAlert confirmation dialog
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "This action cannot be undone!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#D26D69',
-            cancelButtonColor: '#15A362',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Submit the form if user confirms
-                document.getElementById('deleteForm-' + customerId).submit();
-            }
-        });
-    }
+		// Trigger SweetAlert confirmation dialog
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "This action cannot be undone!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#D26D69',
+			cancelButtonColor: '#15A362',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Submit the form if user confirms
+				document.getElementById('deleteForm-' + customerId).submit();
+			}
+		});
+	}
 </script>
 <script src="assets/js/app.js"></script>
 <!-- SweetAlert Script -->
@@ -284,7 +280,7 @@ $total_pages = ceil($total_items / $items_per_page);
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script>
-	
+
 	// document.getElementById('createProductForm').addEventListener('submit', function (event) {
 	// 	var isValid = true;
 	// 	var fields = ['product_name', 'description', 'price', 'stock_quantity', 'category_id', 'image_url'];
