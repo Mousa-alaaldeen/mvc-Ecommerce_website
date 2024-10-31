@@ -18,10 +18,7 @@
             <label>Category ID</label>
             <input type="text" class="form-control" name="category_id" value="<?= htmlspecialchars($product['category_id']); ?>">
         </div>
-        <div class="col-md-6 mt-3">
-            <label>Average Rating</label>
-            <input type="text" class="form-control" name="average_rating" value="<?= htmlspecialchars($product['average_rating']); ?>">
-        </div>
+       
         <div class="col-md-6 mt-3">
             <label>Stock Quantity</label>
             <input type="text" class="form-control" name="stock_quantity" value="<?= htmlspecialchars($product['stock_quantity']); ?>">

@@ -192,7 +192,7 @@ $total_pages = ceil($total_items / $items_per_page);
 						<tr class="text-center">
 							<td><?php echo htmlspecialchars($product['id']); ?></td>
 							<td>
-								<img src='http://localhost/Ecommerce_website.github.io-/<?= !empty($product['image_url']) ? htmlspecialchars($product['image_url']) : 'path/to/default/image.jpg'; ?>'
+								<img src='/public/<?= !empty($product['image_url']) ? htmlspecialchars($product['image_url']) : 'path/to/default/image.jpg'; ?>'
 									class="img-thumbnail" style="max-width: 100px;">
 							</td>
 							<td class="text-truncate" style="max-width: 150px;">
@@ -211,15 +211,20 @@ $total_pages = ceil($total_items / $items_per_page);
 							<td>
 								<div class="d-flex align-items-center">
 									<a href="/admin/product_edit/<?= htmlspecialchars($product['id']); ?>"
-										class="btn btn-success btn-sm me-2">View</a>
+										class="btn btn-success btn-sm me-2">
+										<i class="bi bi-eye"></i>
+									</a>
 									<form id="deleteForm-<?= htmlspecialchars($product['id']); ?>"
 										action="/admin/deleteProduct" method="POST"
 										onsubmit="return confirmDelete(event, '<?= htmlspecialchars($product['id']); ?>')">
 										<input type="hidden" name="productId"
 											value="<?= htmlspecialchars($product['id']); ?>">
-										<button type="submit" class="btn btn-danger btn-sm">Delete</button>
+										<button type="submit" class="btn btn-danger btn-sm">
+											<i class="bi bi-trash"></i>
+										</button>
 									</form>
 								</div>
+
 							</td>
 						</tr>
 					<?php endforeach; ?>
@@ -248,6 +253,28 @@ $total_pages = ceil($total_items / $items_per_page);
 		</div>
 	</div>
 </div>
+
+<script>
+    function confirmDelete(event, customerId) {
+        event.preventDefault(); // Prevent the form from submitting immediately
+
+        // Trigger SweetAlert confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This action cannot be undone!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#D26D69',
+            cancelButtonColor: '#15A362',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit the form if user confirms
+                document.getElementById('deleteForm-' + customerId).submit();
+            }
+        });
+    }
+</script>
 <script src="assets/js/app.js"></script>
 <!-- SweetAlert Script -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -257,6 +284,7 @@ $total_pages = ceil($total_items / $items_per_page);
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script>
+	
 	// document.getElementById('createProductForm').addEventListener('submit', function (event) {
 	// 	var isValid = true;
 	// 	var fields = ['product_name', 'description', 'price', 'stock_quantity', 'category_id', 'image_url'];

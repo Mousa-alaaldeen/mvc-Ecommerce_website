@@ -40,7 +40,7 @@ class AdminController extends Controller
     public function manageProducts()
     {
         $categories = $this->model('Category')->all();
-        $products = $this->model('Product')->getAllProducts();
+        $products = $this->model('Product')->getProducts();
         $this->view('admin/manage_products', ['products' => $products, 'categories' => $categories]);
     }
 
@@ -61,14 +61,14 @@ class AdminController extends Controller
         $this->view('admin/product_view', ['product' => $product]);
 
     }
-  //view Item
-  public function viewCustomer($id)
-  {
-      $customer = $this->model('Customer')->find($id);
-      // var_dump($product);
-      $this->view('admin/customer_view', ['customer' => $customer]);
+    //view Item
+    public function viewCustomer($id)
+    {
+        $customer = $this->model('Customer')->find($id);
+        // var_dump($product);
+        $this->view('admin/customer_view', ['customer' => $customer]);
 
-  }
+    }
 
     // public function updateProduct($id,$data) {
 
@@ -106,7 +106,7 @@ class AdminController extends Controller
         $this->view('admin/Customer_edit', ['customer' => $customer]);
     }
     //update Customer
-    
+
     public function updateCustomer($id)
     {
         $data = [
@@ -118,23 +118,23 @@ class AdminController extends Controller
             'address' => $_POST['address'],
             'updated_at' => date('Y-m-d H:i:s')
         ];
-    
+
         if (isset($_FILES['image_url']) && $_FILES['image_url']['error'] === 0) {
-     
+
             $targetDir = __DIR__ . "/../public/uploads/";
-            
+
 
             if (!is_dir($targetDir)) {
                 mkdir($targetDir, 0777, true);
             }
-            
+
             $targetFile = $targetDir . basename($_FILES['image_url']['name']);
             $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-    
+
             $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
             if (in_array($imageFileType, $allowedTypes)) {
                 if (move_uploaded_file($_FILES['image_url']['tmp_name'], $targetFile)) {
-                   
+
                     $data['image_url'] = "/public/uploads/" . basename($_FILES['image_url']['name']);
                 } else {
                     $_SESSION['message'] = "Error uploading image.";
@@ -145,7 +145,7 @@ class AdminController extends Controller
                 return;
             }
         } else {
-           
+
             $customer = $this->model('Customer')->find($id);
             $data['image_url'] = $customer['image_url'];
         }
@@ -159,9 +159,9 @@ class AdminController extends Controller
         $customer = $this->model('Customer')->find($id);
         $this->view('admin/customer_edit', ['customer' => $customer]);
     }
-    
-    
-    
+
+
+
     // public function gitCategory()
     // {
     //     $categories = $this->model('Product')->getProducts();
@@ -244,13 +244,13 @@ class AdminController extends Controller
     public function createCustomer()
     {
         if (isset($_POST['username'], $_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password'], $_POST['phone_number'])) {
-            
+
             // Check if the email is already in use
             if ($this->model('Customer')->isEmailTaken($_POST['email'])) {
                 echo json_encode(['emailTaken' => true]);
                 exit();
             }
-    
+
             $customerData = [
                 'username' => $_POST['username'],
                 'first_name' => $_POST['first_name'],
@@ -261,40 +261,40 @@ class AdminController extends Controller
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
-    
+
             $customerId = $this->model('Customer')->create($customerData);
-    
+
             // Handle file upload
             $uploadDir = 'uploads/';
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
-    
-    
+
+
             $this->view('admin/manage_customers', ['customers' => $this->model('Customer')->all()]);
         } else {
             $_SESSION['message'] = "Please fill in all required fields.";
             $this->view('admin/manage_customers');
         }
     }
-    
+
     //delete Customer
     public function deleteCustomer()
-{
-    $id = $_POST['id'] ?? null;
+    {
+        $id = $_POST['id'] ?? null;
 
-    if (!$id || !$this->model('Customer')->find($id)) {
-        $_SESSION['error'] = "Customer not found!";
+        if (!$id || !$this->model('Customer')->find($id)) {
+            $_SESSION['error'] = "Customer not found!";
+            header("Location: /admin/manage_customers");
+            exit;
+        }
+
+        $this->model('Customer')->delete($id);
+
+        $_SESSION['message'] = "Customer deleted successfully!";
         header("Location: /admin/manage_customers");
         exit;
     }
-
-    $this->model('Customer')->delete($id);
-
-    $_SESSION['message'] = "Customer deleted successfully!";
-    header("Location: /admin/manage_customers");
-    exit;
-}
 
 
 
@@ -302,7 +302,7 @@ class AdminController extends Controller
     // Manage customers
     public function manageCustomers()
     {
-        
+
         $customers = $this->model('Customer')->all();
         $this->view('admin/manage_customers', ['customers' => $customers]);
     }
@@ -329,91 +329,131 @@ class AdminController extends Controller
     // }
     // =============================================
     public function editProduct($id)
-{
-    $product = $this->model('Product')->find($id);
-    $this->view('admin/product_edit', ['product' => $product]);
-}
-public function gitCategory(){
-    $categories = $this->model('Product')->getProducts();
-    $this->view('admin/product_edit', ['Product' => $categories]);
+    {
+        $categories = $this->model('Category')->all();
+        $product = $this->model('Product')->find($id);
+        $this->view('admin/product_edit', ['product' => $product, 'categories' => $categories]);
+    }
+    public function gitCategory()
+    {
+        $categories = $this->model('Product')->getProducts();
+        $this->view('admin/product_edit', ['Product' => $categories]);
 
-}
-public function manageOrders()
+    }
+    public function manageOrders()
     {
         $orders = $this->model('Order')->All();
         $this->view('admin/manage_orders', ['orders' => $orders]);
     }
 
-public function updateProduct($id)
-{
-     //dd($id);
+    // public function updateProduct($id)
+    // {
+    //     //dd($id);
+    //     $data = [
+    //         'price' => $_POST['price'],
+    //         'description' => $_POST['description'],
+    //         'category_id' => $_POST['category_id'],
+    //         'average_rating' => $_POST['average_rating'],
+    //         'stock_quantity' => $_POST['stock_quantity'],
+    //     ];
+    //     $product = $this->model('Product')->find($id);
+    //     //dd($product);
+
+    //     $this->model('Product')->update($id, $data);
+
+
+    //     $_SESSION['message'] = "Product updated successfully!";
+
+    //     $this->view('admin/product_edit', ['product' => $product]);
+
+    //     var_dump($_POST);
+    //     exit;
+    // }
+
+    public function updateProduct($id)
+    {
         $data = [
-            'price' => $_POST['price'],
             'description' => $_POST['description'],
+            'price' => $_POST['price'],
             'category_id' => $_POST['category_id'],
-            'average_rating' => $_POST['average_rating'],
             'stock_quantity' => $_POST['stock_quantity'],
         ];
-        $product = $this->model('Product')->find($id);
-    //dd($product);
-
+    
         $this->model('Product')->update($id, $data);
-
-
+    
+        if (!empty($_FILES['image_url']['name'])) {
+            $targetDir = 'public/uploads/';
+            $targetFile = $targetDir . basename($_FILES['image_url']['name']);
+            $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+    
+            if (in_array($imageFileType, ['jpg', 'png', 'jpeg', 'gif'])) {
+                if (move_uploaded_file($_FILES['image_url']['tmp_name'], $targetFile)) {
+                    $imageUrl = $targetFile;
+                    $this->model('ProductImage')->update($id, $imageUrl);
+                } else {
+                    $_SESSION['error'] = "Sorry, there was an error uploading your file.";
+                    return;
+                }
+            } else {
+                $_SESSION['error'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                return;
+            }
+        }
+    
+        $product = $this->model('Product')->getProductWithImage($id);
         $_SESSION['message'] = "Product updated successfully!";
+        $this->view('admin/product_edit', ['product' => $product]);
+        exit;
+    }
+    
 
+    public function deleteProduct()
+    {
+        $id = $_POST['productId'] ?? null;
 
+        if (!$id || !$this->model('Product')->find($id)) {
+            $_SESSION['error'] = "Product not found!";
+            header("Location: /admin/manage_products");
+            exit;
+        }
 
-    ;
-    $this->view('admin/product_edit', ['product' => $product]);
+        $this->model('Product')->delete($id);
 
-    var_dump($_POST);
-exit;
-}
-public function deleteProduct()
-{
-    $id = $_POST['productId'] ?? null;
-
-    if (!$id || !$this->model('Product')->find($id)) {
-        $_SESSION['error'] = "Product not found!";
+        $_SESSION['message'] = "Product deleted successfully!";
         header("Location: /admin/manage_products");
         exit;
     }
+    public function viewCategory($id)
+    {
+        $category = $this->model('Category')->find($id);
+        $this->view('admin/category_view', ['category' => $category]);
+    }
+    public function editCategory($id)
+    {
+        $category = $this->model('Category')->find($id);
+        $this->view('admin/category_edit', ['category' => $category]);
+    }
 
-    $this->model('Product')->delete($id);
+    public function updateCategory($id)
+    {
+        $data = [
+            'category_name' => $_POST['category_name'],
+            'image_url' => $_POST['image_url'],
+        ];
 
-    $_SESSION['message'] = "Product deleted successfully!";
-    header("Location: /admin/manage_products");
-    exit;
-}
-public function viewCategory($id) {
-    $category = $this->model('Category')->find($id);
-    $this->view('admin/category_view', ['category' => $category]);
-}
-public function editCategory($id) {
-    $category = $this->model('Category')->find($id);
-    $this->view('admin/category_edit', ['category' => $category]);
-}
+        $category = $this->model('Category')->find($id);
 
-public function updateCategory($id) {
-    $data= [
-        'category_name' => $_POST['category_name'],
-        'image_url' => $_POST['image_url'],
-    ];
+        $this->model('Category')->update($id, $data);
 
-    $category = $this->model('Category')->find($id);
+        $_SESSION['message'] = "Category updated successfully!";
 
-    $this->model('Category')->update($id, $data);
+        $this->view('admin/category_edit', ['category' => $category]);
 
-    $_SESSION['message'] = "Category updated successfully!";
+        var_dump($_POST);
+        exit;
+    }
 
-    $this->view('admin/category_edit', ['category' => $category]);
-
-    var_dump($_POST);
-    exit;
-}
-
-public function deleteCategory()
+    public function deleteCategory()
     {
         $id = $_POST['categoryId'] ?? null;
 
@@ -433,7 +473,7 @@ public function deleteCategory()
     {
         // $admin = $this->model('Admin')->All($_SESSION['admin_id']);
         // $this->view('admin/account_settings', ['admins' => $admin]);
-        $id=1;
+        $id = 1;
         $admin = $this->model('Admin')->find($id);
         $this->view('admin/account_settings', ['admin' => $admin]);
     }
