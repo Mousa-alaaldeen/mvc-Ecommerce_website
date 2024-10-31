@@ -191,10 +191,13 @@
 			<div id="sidepanel-drop" class="sidepanel-drop"></div>
 			<div class="sidepanel-inner d-flex flex-column">
 				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
-				<div class="app-branding">
-					<a class="app-logo" href="index.php"><img class="logo-icon me-2" src="assets/images/app-logo.svg"
-							alt="logo"><span class="logo-text">PORTAL</span></a>
-				</div><!--//app-branding-->
+				
+				<a class="app-logo" href="index.php">
+    <img style="width: 45px; height: auto;" src="http://localhost:8888/public/images/Logo%20(2).png" alt="Logo">
+    <span class="ms-2" style="font-size: 20px; font-style: italic;">Admin Dashboard</span>
+</a>
+
+
 				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
 					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
 						<li class="nav-item">
