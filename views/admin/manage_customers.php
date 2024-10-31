@@ -165,17 +165,22 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                                     ?>
                                 </td>
                                 <td>
-                                <div class="d-flex align-items-center">
-    <a href="/admin/customer_edit/<?= htmlspecialchars($customer['id']); ?>" class="btn btn-success btn-sm">
-        <i class="bi bi-eye"></i>
-    </a>
-    <form id="deleteForm-<?= htmlspecialchars($customer['id']); ?>" action="/admin/deleteCustomer" method="POST" onsubmit="return confirmDelete(event, '<?= htmlspecialchars($customer['id']); ?>')" class="ms-2">
-        <input type="hidden" name="id" value="<?= htmlspecialchars($customer['id']); ?>">
-        <button type="submit" class="btn btn-danger btn-sm">
-            <i class="bi bi-trash"></i>
-        </button>
-    </form>
-</div>
+                                    <div class="d-flex align-items-center">
+                                        <a href="/admin/customer_edit/<?= htmlspecialchars($customer['id']); ?>"
+                                            class="btn btn-success btn-sm">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <form id="deleteForm-<?= htmlspecialchars($customer['id']); ?>"
+                                            action="/admin/deleteCustomer" method="POST"
+                                            onsubmit="return confirmDelete(event, '<?= htmlspecialchars($customer['id']); ?>')"
+                                            class="ms-2">
+                                            <input type="hidden" name="id"
+                                                value="<?= htmlspecialchars($customer['id']); ?>">
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
 
 
 

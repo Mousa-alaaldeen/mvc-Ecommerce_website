@@ -152,7 +152,7 @@ $total_pages = ceil($total_items / $items_per_page);
 									<label for="category_id" class="form-label">Category</label>
 									<select class="form-select" id="category_id" name="category_id">
 										<option value="" disabled selected>Select a category</option>
-										<?php var_dump($categories)?>
+										<?php var_dump($categories) ?>
 										<?php foreach ($categories as $category): ?>
 											<option value="<?php echo htmlspecialchars($category['id']); ?>">
 												<?php echo htmlspecialchars($category['category_name']); ?>
@@ -209,10 +209,17 @@ $total_pages = ceil($total_items / $items_per_page);
 							<td><?php echo number_format($product['average_rating'], 1); ?>/5</td>
 							<td><?php echo (int) $product['stock_quantity']; ?></td>
 							<td>
-								<a href="/admin/product_edit/<?= htmlspecialchars($product['id']); ?>"
-									class="btn btn-success btn-sm">View</a>
-								<a href="/admin/product_delete/<?= htmlspecialchars($product['id']); ?>"
-									class="btn btn-danger btn-sm ms-2">Delete</a>
+								<div class="d-flex align-items-center">
+									<a href="/admin/product_edit/<?= htmlspecialchars($product['id']); ?>"
+										class="btn btn-success btn-sm me-2">View</a>
+									<form id="deleteForm-<?= htmlspecialchars($product['id']); ?>"
+										action="/admin/deleteProduct" method="POST"
+										onsubmit="return confirmDelete(event, '<?= htmlspecialchars($product['id']); ?>')">
+										<input type="hidden" name="productId"
+											value="<?= htmlspecialchars($product['id']); ?>">
+										<button type="submit" class="btn btn-danger btn-sm">Delete</button>
+									</form>
+								</div>
 							</td>
 						</tr>
 					<?php endforeach; ?>

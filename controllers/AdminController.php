@@ -45,11 +45,11 @@ class AdminController extends Controller
     }
 
     // Manage orders
-    public function manageOrders()
-    {
-        $orders = $this->model('Order')->getAllOrders();
-        $this->view('admin/manage_orders', ['orders' => $orders]);
-    }
+    // public function manageOrders()
+    // {
+    //     $orders = $this->model('Order')->getAllOrders();
+    //     $this->view('admin/manage_orders', ['orders' => $orders]);
+    // }
 
 
 
@@ -77,11 +77,28 @@ class AdminController extends Controller
     //     $this->view('admin/product_update',['product'=>$product]);
 
     // }
-    public function editProduct($id)
-    {
-        $product = $this->model('Product')->find($id);
-        $this->view('admin/product_edit', ['product' => $product]);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // public function editProduct($id)
+    // {
+    //     $product = $this->model('Product')->find($id);
+    //     $this->view('admin/product_edit', ['product' => $product]);
+    // }
     //edit Customer
     public function editCustomer($id)
     {
@@ -145,33 +162,33 @@ class AdminController extends Controller
     
     
     
-    public function gitCategory()
-    {
-        $categories = $this->model('Product')->getProducts();
-        $this->view('admin/product_edit', ['Product' => $categories]);
+    // public function gitCategory()
+    // {
+    //     $categories = $this->model('Product')->getProducts();
+    //     $this->view('admin/product_edit', ['Product' => $categories]);
 
-    }
+    // }
 
-    public function updateProduct($id)
-    {
-        //dd($id);
-        $data = [
-            'price' => $_POST['price'],
-            'description' => $_POST['description'],
-            'category_id' => $_POST['category_id'],
-            'average_rating' => $_POST['average_rating'],
-            'stock_quantity' => $_POST['stock_quantity'],
-        ];
-        $product = $this->model('Product')->find($id);
-        //dd($product);
-        $this->model('Product')->update($id, $data);
-        $_SESSION['message'] = "Product updated successfully!";
-        ;
-        $this->view('admin/product_edit', ['product' => $product]);
+    // public function updateProduct($id)
+    // {
+    //     //dd($id);
+    //     $data = [
+    //         'price' => $_POST['price'],
+    //         'description' => $_POST['description'],
+    //         'category_id' => $_POST['category_id'],
+    //         'average_rating' => $_POST['average_rating'],
+    //         'stock_quantity' => $_POST['stock_quantity'],
+    //     ];
+    //     $product = $this->model('Product')->find($id);
+    //     //dd($product);
+    //     $this->model('Product')->update($id, $data);
+    //     $_SESSION['message'] = "Product updated successfully!";
+    //     ;
+    //     $this->view('admin/product_edit', ['product' => $product]);
 
-        var_dump($_POST);
-        exit;
-    }
+    //     var_dump($_POST);
+    //     exit;
+    // }
     //create Product
     public function createProduct()
     {
@@ -305,11 +322,123 @@ class AdminController extends Controller
     }
 
     // Account settings page
+    // public function accountSettings()
+    // {
+    //     $admin = $this->model('Admin')->getAdminById($_SESSION['admin_id']);
+    //     $this->view('admin/account_settings', ['admins' => $admin]);
+    // }
+    // =============================================
+    public function editProduct($id)
+{
+    $product = $this->model('Product')->find($id);
+    $this->view('admin/product_edit', ['product' => $product]);
+}
+public function gitCategory(){
+    $categories = $this->model('Product')->getProducts();
+    $this->view('admin/product_edit', ['Product' => $categories]);
+
+}
+public function manageOrders()
+    {
+        $orders = $this->model('Order')->All();
+        $this->view('admin/manage_orders', ['orders' => $orders]);
+    }
+
+public function updateProduct($id)
+{
+     //dd($id);
+        $data = [
+            'price' => $_POST['price'],
+            'description' => $_POST['description'],
+            'category_id' => $_POST['category_id'],
+            'average_rating' => $_POST['average_rating'],
+            'stock_quantity' => $_POST['stock_quantity'],
+        ];
+        $product = $this->model('Product')->find($id);
+    //dd($product);
+
+        $this->model('Product')->update($id, $data);
+
+
+        $_SESSION['message'] = "Product updated successfully!";
+
+
+
+    ;
+    $this->view('admin/product_edit', ['product' => $product]);
+
+    var_dump($_POST);
+exit;
+}
+public function deleteProduct()
+{
+    $id = $_POST['productId'] ?? null;
+
+    if (!$id || !$this->model('Product')->find($id)) {
+        $_SESSION['error'] = "Product not found!";
+        header("Location: /admin/manage_products");
+        exit;
+    }
+
+    $this->model('Product')->delete($id);
+
+    $_SESSION['message'] = "Product deleted successfully!";
+    header("Location: /admin/manage_products");
+    exit;
+}
+public function viewCategory($id) {
+    $category = $this->model('Category')->find($id);
+    $this->view('admin/category_view', ['category' => $category]);
+}
+public function editCategory($id) {
+    $category = $this->model('Category')->find($id);
+    $this->view('admin/category_edit', ['category' => $category]);
+}
+
+public function updateCategory($id) {
+    $data= [
+        'category_name' => $_POST['category_name'],
+        'image_url' => $_POST['image_url'],
+    ];
+
+    $category = $this->model('Category')->find($id);
+
+    $this->model('Category')->update($id, $data);
+
+    $_SESSION['message'] = "Category updated successfully!";
+
+    $this->view('admin/category_edit', ['category' => $category]);
+
+    var_dump($_POST);
+    exit;
+}
+
+public function deleteCategory()
+    {
+        $id = $_POST['categoryId'] ?? null;
+
+        if (!$id || !$this->model('Category')->find($id)) {
+            $_SESSION['error'] = "Category not found!";
+            header("Location: /admin/manage_category");
+            exit;
+        }
+
+        $this->model('Category')->delete($id);
+
+        $_SESSION['message'] = "Category deleted successfully!";
+        header("Location: /admin/manage_category");
+        exit;
+    }
     public function accountSettings()
     {
-        $admin = $this->model('Admin')->getAdminById($_SESSION['admin_id']);
-        $this->view('admin/account_settings', ['admins' => $admin]);
+        // $admin = $this->model('Admin')->All($_SESSION['admin_id']);
+        // $this->view('admin/account_settings', ['admins' => $admin]);
+        $id=1;
+        $admin = $this->model('Admin')->find($id);
+        $this->view('admin/account_settings', ['admin' => $admin]);
     }
+
+    // ===================================================
 
     // Admin logout
     public function logout()
