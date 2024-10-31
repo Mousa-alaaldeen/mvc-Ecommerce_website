@@ -12,11 +12,11 @@ class Category extends Model {
     public function getAllCategories()
     {
         $statement = $this->pdo->prepare("
-        SELECT *
-        FROM
-         $this->table ");
+        SELECT id, category_name
+        FROM $this->table
+        ");
         $statement->execute();
-        return $statement->fetchAll(\pdo::FETCH_ASSOC);
-
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
+    
 }

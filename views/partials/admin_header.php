@@ -22,6 +22,7 @@
 	<link href="/public/css/admin.css" rel="stylesheet">
 	<link href="/public/css/admin.css" rel="stylesheet">
 </head>
+
 <body class="app">
 	<header class="app-header fixed-top">
 		<div class="app-header-inner">
@@ -50,8 +51,6 @@
 										class="fa-solid fa-magnifying-glass"></i></button>
 							</form>
 						</div><!--//app-search-box-->
-
-
 						<div class="app-utilities col-auto">
 							<div class="app-utility-item app-notifications-dropdown dropdown">
 								<a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle"
@@ -169,7 +168,6 @@
 									</svg>
 								</a>
 							</div><!--//app-utility-item-->
-
 							<div class="app-utility-item app-user-dropdown dropdown">
 								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
 									role="button" aria-expanded="false"><img src="assets/images/user.png"
@@ -200,7 +198,7 @@
 					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
 						<li class="nav-item">
 							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-							<a class="nav-link active" href="index.php">
+							<a class="nav-link active" href="/admin/dashboard">
 								<span class="nav-icon">
 									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door"
 										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -231,7 +229,7 @@
 						</li><!--//nav-item-->
 						<li class="nav-item">
 							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-							<a class="nav-link" href="customer.php">
+							<a class="nav-link" href="/admin/manage_customers">
 								<span class="nav-icon">
 									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder"
 										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -246,7 +244,7 @@
 						</li><!--//nav-item-->
 						<li class="nav-item">
 							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-							<a class="nav-link" href="categories.php">
+							<a class="nav-link ac" href="/admin/manage_category">
 								<span class="nav-icon">
 									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list"
 										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -430,3 +428,4 @@
 			</div><!--//sidepanel-inner-->
 		</div>
 	</header>
+	<script src="/public/js/header.js"></script>

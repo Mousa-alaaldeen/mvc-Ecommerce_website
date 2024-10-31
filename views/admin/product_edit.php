@@ -29,7 +29,6 @@
                                     </div>
                                 </div>
 
-
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Product ID</label>
@@ -43,7 +42,7 @@
                                     </div>
                                     <div class="col-md-12 mt-3">
                                         <label>Description</label>
-                                        <textarea class="form-control" rows="2"
+                                        <textarea class="form-control" rows="5"
                                             readonly><?php echo $product['description']; ?></textarea>
                                     </div>
                                     <div class="col-md-6 mt-3">
@@ -103,7 +102,7 @@
                                                 <div class="col-md-12 mt-3">
                                                     <label>Description</label>
                                                     <textarea class="form-control" name="description"
-                                                        rows="2"><?= htmlspecialchars($product['description']); ?></textarea>
+                                                        rows="5"><?= htmlspecialchars($product['description']); ?></textarea>
                                                 </div>
                                                 <div class="col-md-6 mt-3">
                                                     <label>Category ID</label>
@@ -133,70 +132,7 @@
                         </div>
 
 
-                        <!-- Modal for Viewing Order Details -->
-                        <div class="modal fade" id="orderDetailsModal" tabindex="-1"
-                            aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="orderDetailsModalLabel">Order Details</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="order-details">
-                                            <h5>Order ID: <span class="text-primary">#12345</span></h5>
-                                            <p><strong>Date:</strong> <span class="text-muted">Oct 15, 2024</span></p>
-                                            <p><strong>Status:</strong> <span class="text-success">Delivered</span></p>
-                                            <p><strong>Total:</strong> <span class="text-danger">$49.99</span></p>
-                                            <p><strong>Shipping Address:</strong> <span class="text-muted">123 Main St,
-                                                    City, Country</span>
-                                            </p>
-                                            <p><strong>Items Ordered:</strong></p>
-                                            <div class="order-items">
-                                                <ul class="list-group">
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        Product 1
-                                                        <span class="badge bg-secondary">$19.99</span>
-                                                    </li>
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        Product 2
-                                                        <span class="badge bg-secondary">$30.00</span>
-                                                    </li>
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        Product 3
-                                                        <span class="badge bg-secondary">$25.00</span>
-                                                    </li>
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        Product 4
-                                                        <span class="badge bg-secondary">$15.00</span>
-                                                    </li>
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        Product 5
-                                                        <span class="badge bg-secondary">$40.00</span>
-                                                    </li>
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        Product 6
-                                                        <span class="badge bg-secondary">$20.00</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- SweetAlert Script -->
+                     
                         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
                         <!-- JavaScript -->
@@ -212,7 +148,6 @@
                                     confirmButtonColor: '#3B5D50'
                                 });
                             }
-
                             function removeItem(itemName) {
                                 Swal.fire({
                                     title: 'Are you sure?',

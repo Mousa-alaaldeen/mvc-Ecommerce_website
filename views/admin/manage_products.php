@@ -128,7 +128,6 @@ $total_pages = ceil($total_items / $items_per_page);
 								</div>
 							</div>
 							<div class="modal-body">
-								<!-- باقي الحقول -->
 								<div class="mb-3">
 									<label for="product_name" class="form-label">Product Name</label>
 									<input type="text" class="form-control" id="product_name" name="product_name">
@@ -153,6 +152,7 @@ $total_pages = ceil($total_items / $items_per_page);
 									<label for="category_id" class="form-label">Category</label>
 									<select class="form-select" id="category_id" name="category_id">
 										<option value="" disabled selected>Select a category</option>
+										<?php var_dump($categories)?>
 										<?php foreach ($categories as $category): ?>
 											<option value="<?php echo htmlspecialchars($category['id']); ?>">
 												<?php echo htmlspecialchars($category['category_name']); ?>
@@ -250,20 +250,20 @@ $total_pages = ceil($total_items / $items_per_page);
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script>
-	document.getElementById('createProductForm').addEventListener('submit', function (event) {
-		var isValid = true;
-		var fields = ['product_name', 'description', 'price', 'stock_quantity', 'category_id', 'image_url'];
+	// document.getElementById('createProductForm').addEventListener('submit', function (event) {
+	// 	var isValid = true;
+	// 	var fields = ['product_name', 'description', 'price', 'stock_quantity', 'category_id', 'image_url'];
 
-		fields.forEach(function (field) {
-			var input = document.getElementById(field);
-			if (!input.value) {
-				isValid = false;
-				return;
-			}
-		});
-		if (!isValid) {
-			event.preventDefault();
-			swal("Error!", "Please fill all fields!", "error");
-		}
-	});
+	// 	fields.forEach(function (field) {
+	// 		var input = document.getElementById(field);
+	// 		if (!input.value) {
+	// 			isValid = false;
+	// 			return;
+	// 		}
+	// 	});
+	// 	if (!isValid) {
+	// 		event.preventDefault();
+	// 		swal("Error!", "Please fill all fields!", "error");
+	// 	}
+	// });
 </script>

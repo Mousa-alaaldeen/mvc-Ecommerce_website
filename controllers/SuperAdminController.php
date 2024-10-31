@@ -62,7 +62,7 @@ class SuperAdminController extends Controller {
     // Manage customers
     public function manageCustomers()
     {
-        $customers = $this->model('Customer')->getAllCustomers();
+        $customers = $this->model('Customer')->all();
         $this->view('admin/manage_customers', ['customers' => $customers]);
     }
 

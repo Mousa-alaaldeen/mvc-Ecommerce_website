@@ -5,6 +5,7 @@
 </footer>
 <!-- Javascript -->
 <script src="../../public/js/app.js"></script>
+<script src="/public/js/chart.main.js"></script>
 <script src="assets/plugins/popper.min.js"></script>
 <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <!-- Charts JS -->

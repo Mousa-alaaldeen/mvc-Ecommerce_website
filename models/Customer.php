@@ -9,5 +9,13 @@ class Customer extends Model
         parent::__construct('customers');
 
     }
+    public function isEmailTaken($email)
+{
+    $sql = "SELECT COUNT(*) FROM $this->table WHERE email = :email";
+    $statement = $this->pdo->prepare($sql);
+    $statement->execute(['email' => $email]);
+    return $statement->fetchColumn() > 0;
+}
+
 
 }

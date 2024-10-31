@@ -1,6 +1,7 @@
 <?php
 
-class Core {
+class Core
+{
     protected $routes = [
         // Default route to customer index
         '' => ['CustomerController@index', 'GET'], // This handles the root URL
@@ -11,15 +12,18 @@ class Core {
         'admin/manage_category' => ['AdminController@manageCategory', 'GET'],
         'admin/manage_products' => ['AdminController@manageProducts', 'GET'],
         'admin/manage_orders' => ['AdminController@manageOrders', 'GET'],
-        'admin/manage_customers' => ['AdminController@manageCustomers', 'GET'],
+        'admin/manage_customers' => ['AdminController@manageCustomers', [ 'POST' , 'GET'] ],
         'admin/manage_coupon' => ['AdminController@manageCoupon', 'GET'],
         'admin/messages' => ['AdminController@messages', 'GET'],
         'admin/account_settings' => ['AdminController@accountSettings', 'GET'],
         'admin/logout' => ['AdminController@logout', 'GET'],
-        'admin/product_view' => ['AdminController@viewProduct', 'GET'],
         'admin/product_edit' => ['AdminController@editProduct', 'GET'], // Specify POST for updates
         'admin/product_update' => ['AdminController@updateProduct', 'POST'], // Specify POST for updates
-'admin/product_create' => ['AdminController@createProduct', 'POST'],
+        'admin/customer_edit' => ['AdminController@editCustomer', 'GET','GET'], // Specify POST for updates
+        'admin/customer_update' => ['AdminController@updateCustomer', 'POST','GET'], // Specify POST for updates
+        'admin/product_create' => ['AdminController@createProduct', [ 'POST' , 'GET']],
+        'admin/customer_create' => ['AdminController@createCustomer', [ 'POST' , 'GET']],
+        'admin/deleteCustomer' => ['AdminController@deleteCustomer', ['GET', 'POST']],
         // Super Admin Routes
         'super-admin/login' => ['SuperAdminController@login', 'POST'],
         'super-admin/dashboard' => ['SuperAdminController@dashboard', 'GET'],
@@ -46,43 +50,41 @@ class Core {
         'customers/logout' => ['CustomerController@logout', 'GET'],
     ];
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->dispatch();
     }
 
     private function dispatch() {
         $url = $this->getUrl();
         $method = $_SERVER['REQUEST_METHOD']; // Get the current request method
-        // var_dump($method);
-        
+
         // Split URL into parts
         $urlParts = explode('/', $url);
         $lastPart = end($urlParts);
-    
+
         // Determine route path and optional ID
         if (ctype_digit($lastPart)) {
             $id = $lastPart;
             $routePath = implode('/', array_slice($urlParts, 0, -1)); // Remove last part for route path
-        // var_dump($routePath);
         } else {
             $routePath = $url; // Use full URL as route path
             $id = null;         // No ID
         }
-    
+
         if (isset($this->routes[$routePath])) {
             $route = $this->routes[$routePath];
             $controllerMethod = explode('@', $route[0]);
-            // var_dump($controllerMethod[0]);
             $controllerName = $controllerMethod[0];
             $methodName = $controllerMethod[1];
             $routeMethod = $route[1] ?? 'GET'; // Default to GET if no method is specified
-    
-            // Check if the route method matches the request method
-            if ($method === $routeMethod) {
+
+            // Check if route allows the request method
+            if ((is_array($routeMethod) && in_array($method, $routeMethod)) || $method === $routeMethod) {
                 if (file_exists('controllers/' . $controllerName . '.php')) {
                     require_once 'controllers/' . $controllerName . '.php';
                     $controller = new $controllerName;
-        
+
                     if (method_exists($controller, $methodName)) {
                         // Call the method with or without ID
                         if ($id !== null) {
