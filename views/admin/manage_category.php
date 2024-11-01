@@ -66,7 +66,7 @@ $total_pages = ceil($total_items / $items_per_page);
 						<tr class="text-center">
 							<td><?= htmlspecialchars($category['id']); ?></td>
 							<td>
-								<img src='http://localhost/Ecommerce_website.github.io-/<?= !empty($category['image_url']) ? htmlspecialchars($category['image_url']) : 'path/to/default/image.jpg'; ?>' 
+								<img src='/public/<?= !empty($category['image_url']) ? htmlspecialchars($category['image_url']) : 'path/to/default/image.jpg'; ?>' 
 									class="img-thumbnail rounded" style="max-width: 100px;">
 							</td>
 							<td class="text-truncate" style="max-width: 150px;">
