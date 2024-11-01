@@ -242,6 +242,28 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
         });
     }
 </script>
+<script>
+    document.getElementById('email').addEventListener('blur', function() {
+    let email = this.value;
+
+    fetch('/admin/manage_customers', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.emailTaken) {
+            document.getElementById('emailError').innerText = 'Email is already taken.';
+        } else {
+            document.getElementById('emailError').innerText = '';
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+</script>
 <!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Handle Create Customer Form Submission

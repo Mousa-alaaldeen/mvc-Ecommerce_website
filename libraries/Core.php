@@ -45,7 +45,9 @@ class Core
         'super-admin/messages' => ['SuperAdminController@messages', 'GET'],
         'super-admin/account_settings' => ['SuperAdminController@accountSettings', 'GET'],
         'super-admin/logout' => ['SuperAdminController@logout', 'GET'],
-        'super-admin/manage_admin' => ['SuperAdminController@manageAdmin', 'GET'],
+        'super_admin/manage_admin' => ['SuperAdminController@manageAdmin', ['GET', 'POST']],
+        'super_admin/add_admin' => ['SuperAdminController@addAdmin', ['GET', 'POST']],
+        
 
         // Customer Routes
         'customers/login_and_register' => ['CustomerController@login', 'POST'],

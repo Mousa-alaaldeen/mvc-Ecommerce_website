@@ -246,10 +246,7 @@ class AdminController extends Controller
         if (isset( $_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password'], $_POST['phone_number'])) {
 
             // Check if the email is already in use
-            if ($this->model('Customer')->isEmailTaken($_POST['email'])) {
-                echo json_encode(['emailTaken' => true]);
-                exit();
-            }
+            
 
             $customerData = [
                 
@@ -261,6 +258,11 @@ class AdminController extends Controller
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
+            if ($this->model('Customer')->isEmailTaken($_POST['email'])) {
+                echo json_encode(['emailTaken' => true]);
+                exit();
+            }
+            
 
             $customerId = $this->model('Customer')->create($customerData);
 

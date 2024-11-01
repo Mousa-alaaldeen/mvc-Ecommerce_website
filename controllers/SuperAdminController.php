@@ -34,7 +34,7 @@ class SuperAdminController extends Controller {
     public function manageAdmin()
     {
         // Logic for managing admin accounts
-        $admins = $this->model('Admin')->getAllAdmins();
+        $admins = $this->model('Admin')->all();
         $this->view('super_admin/manage_admin', ['admins' => $admins]);
     }
 
@@ -79,7 +79,34 @@ class SuperAdminController extends Controller {
         $messages = $this->model('Message')->getAllMessages();
         $this->view('admin/messages', ['messages' => $messages]);
     }
-
+      // Add Admin
+    public function addAdmin() {
+        if (isset($_POST['username'], $_POST['email'], $_POST['password'], $_POST['role'])) {
+            $existingAdmin = $this->model('Admin')->findByEmail($_POST['email']);
+            
+            if ($existingAdmin) {
+                echo "Error: Email already exists.";
+                return; 
+            }
+    
+            $data = [
+                "username" => $_POST['username'],
+                "email" => $_POST['email'],
+                "password" => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                "role" => $_POST['role'],
+            ];
+    
+            
+            $this->model('Admin')->create($data);
+    
+ 
+            $admins = $this->model('Admin')->all();
+            $this->view('super_admin/manage_admin', ['admins' => $admins]);
+        } else {
+            echo "Error: Required data not found.";
+        }
+    }
+    
     // Admin account settings
     public function accountSettings()
     {
