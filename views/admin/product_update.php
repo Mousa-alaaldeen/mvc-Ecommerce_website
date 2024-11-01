@@ -14,10 +14,14 @@
             <label>Description</label>
             <textarea class="form-control" name="description" rows="2"><?= htmlspecialchars($product['description']); ?></textarea>
         </div>
-        <div class="col-md-6 mt-3">
-            <label>Category ID</label>
-            <input type="text" class="form-control" name="category_id" value="<?= htmlspecialchars($product['category_id']); ?>">
-        </div>
+        <select class="form-select" id="category_id" name="category_id" required>
+    <option value="" disabled>Select a category</option>
+    <?php foreach ($categories as $category): ?>
+        <option value="<?= htmlspecialchars($category['id']); ?>" <?= $category['id'] == $product['category_id'] ? 'selected' : '' ?>>
+            <?= htmlspecialchars($category['category_name']); ?>
+        </option>
+    <?php endforeach; ?>
+</select>
        
         <div class="col-md-6 mt-3">
             <label>Stock Quantity</label>

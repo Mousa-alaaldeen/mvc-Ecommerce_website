@@ -110,7 +110,7 @@ class AdminController extends Controller
     public function updateCustomer($id)
     {
         $data = [
-            'username' => $_POST['username'],
+          
             'first_name' => $_POST['first_name'],
             'last_name' => $_POST['last_name'],
             'email' => $_POST['email'],
@@ -243,7 +243,7 @@ class AdminController extends Controller
     //create Customer
     public function createCustomer()
     {
-        if (isset($_POST['username'], $_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password'], $_POST['phone_number'])) {
+        if (isset( $_POST['first_name'], $_POST['last_name'], $_POST['email'], $_POST['password'], $_POST['phone_number'])) {
 
             // Check if the email is already in use
             if ($this->model('Customer')->isEmailTaken($_POST['email'])) {
@@ -252,7 +252,7 @@ class AdminController extends Controller
             }
 
             $customerData = [
-                'username' => $_POST['username'],
+                
                 'first_name' => $_POST['first_name'],
                 'last_name' => $_POST['last_name'],
                 'email' => $_POST['email'],
@@ -372,38 +372,50 @@ class AdminController extends Controller
 
     public function updateProduct($id)
     {
-        $data = [
-            'description' => $_POST['description'],
-            'price' => $_POST['price'],
-            'category_id' => $_POST['category_id'],
-            'stock_quantity' => $_POST['stock_quantity'],
-        ];
-    
-        $this->model('Product')->update($id, $data);
-    
-        if (!empty($_FILES['image_url']['name'])) {
-            $targetDir = 'public/uploads/';
-            $targetFile = $targetDir . basename($_FILES['image_url']['name']);
-            $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-    
-            if (in_array($imageFileType, ['jpg', 'png', 'jpeg', 'gif'])) {
-                if (move_uploaded_file($_FILES['image_url']['tmp_name'], $targetFile)) {
-                    $imageUrl = $targetFile;
-                    $this->model('ProductImage')->update($id, $imageUrl);
+        $categories = $this->model('Category')->all();
+        
+        if (isset($_POST['product_name'], $_POST['price'], $_POST['description'], $_POST['category_id'], $_POST['stock_quantity'])) {
+            $productData = [
+                'product_name' => $_POST['product_name'],
+                'price' => $_POST['price'],
+                'description' => $_POST['description'],
+                'category_id' => $_POST['category_id'],
+               
+                'stock_quantity' => $_POST['stock_quantity'],
+            ];
+            
+            $this->model('Product')->update($id, $productData);
+            
+            $uploadDir = 'uploads/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            
+            if (isset($_FILES['image_url']) && $_FILES['image_url']['error'] == 0) {
+                $imageName = basename($_FILES['image_url']['name']);
+                $imagePath = $uploadDir . $imageName;
+                
+                if (move_uploaded_file($_FILES['image_url']['tmp_name'], $imagePath)) {
+                    $imageData = [
+                        'product_id' => $id,
+                        'image_url' => $imagePath,
+                    ];
+                    
+                   
+                    $this->model('ProductImage')->update($id, $imageData);
+                    $_SESSION['message'] = "Product updated successfully with image!";
                 } else {
-                    $_SESSION['error'] = "Sorry, there was an error uploading your file.";
-                    return;
+                    $_SESSION['message'] = "Failed to upload image.";
                 }
             } else {
-                $_SESSION['error'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-                return;
+                $_SESSION['message'] = "Product updated successfully!";
             }
+        } else {
+            $_SESSION['message'] = "Please fill in all required fields.";
         }
-    
+        
         $product = $this->model('Product')->getProductWithImage($id);
-        $_SESSION['message'] = "Product updated successfully!";
-        $this->view('admin/product_edit', ['product' => $product]);
-        exit;
+        $this->view('admin/product_edit', ['product' => $product, 'categories' => $categories]);
     }
     
 

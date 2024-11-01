@@ -12,7 +12,8 @@ $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 if (!empty($search)) {
     // Filter customers based on search term
     $filtered_customers = array_filter($customers, function ($customer) use ($search) {
-        return stripos($customer['username'], $search) !== false ||
+        return stripos($customer['first_name'], $search) !== false ||
+            stripos($customer['last_name'], $search) !== false ||
             stripos($customer['email'], $search) !== false ||
             stripos($customer['phone_number'], $search) !== false ||
             stripos($customer['address'], $search) !== false;
@@ -30,38 +31,40 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
 <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
-            <div class="row g-3 mb-4 align-items-center justify-content-between">
-                <!-- Page Title -->
-                <!-- Page Title -->
+            <div class="row g-3 mb-4 align-items-center justify-content-between shadow-sm p-3 bg-light rounded">
+                <!-- Page Title with Enhanced Style -->
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0 text-success">Customers</h1>
+                    <h1 class="app-page-title mb-0 text-success fw-bold"
+                        style="font-size: 2rem; text-shadow: 1px 1px 2px #d4edda;">
+                        <i class="bi bi-people-fill me-2"></i>Customers
+                    </h1>
                 </div>
+
                 <!-- Utilities and Search Form -->
                 <div class="col-auto">
                     <div class="page-utilities">
-                        <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+                        <div class="row g-2 align-items-center">
+                            <!-- Search Form -->
                             <div class="col-auto">
                                 <form class="docs-search-form row gx-1 align-items-center" method="GET" action="">
                                     <div class="col-auto">
                                         <input type="text" id="search-docs" name="search"
                                             value="<?php echo htmlspecialchars($search); ?>"
-                                            class="form-control search-docs" placeholder="Search">
+                                            class="form-control bg-light border-success rounded-pill"
+                                            placeholder="Search Customers....">
                                     </div>
                                     <div class="col-auto">
-                                        <button type="submit" class="btn app-btn-secondary">Search</button>
+                                        <button type="submit" class="btn btn-primary rounded-pill">
+                                            <i class="fas fa-search text-white"></i>
+                                        </button>
                                     </div>
                                 </form>
-
                             </div>
-                            <!-- Create Customer Modal Trigger -->
+                            <!-- Create Customer Button -->
                             <div class="col-auto">
-                                <a class="btn app-btn-primary" href="#" data-bs-toggle="modal"
-                                    data-bs-target="#createCustomerModal">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle me-2"
-                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm3.5-7.5a.5.5 0 0 1-.5.5H9v2.5a.5.5 0 0 1-1 0V8H5.5a.5.5 0 0 1 0-1H8V4.5a.5.5 0 0 1 1 0V7h2.5a.5.5 0 0 1 .5.5z" />
-                                    </svg>Create New Customer
+                                <a class="btn btn-success text-white d-flex align-items-center rounded-pill" href="#"
+                                    data-bs-toggle="modal" data-bs-target="#createCustomerModal">
+                                    <i class="bi bi-plus-circle me-2"></i> Add New Customer
                                 </a>
                             </div>
                         </div>
@@ -85,10 +88,7 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                                 </div>
                             </div>
                             <div class="modal-body">
-                                <div class="mb-3">
-                                    <label for="username" class="form-label">User name</label>
-                                    <input type="text" class="form-control" id="username" name="username">
-                                </div>
+
                                 <div class="row mb-3">
                                     <div class="col">
                                         <label for="first_name" class="form-label">First name</label>
@@ -130,7 +130,8 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                         <tr class="text-center">
                             <th>ID</th>
                             <th>Image</th>
-                            <th>Customer Name</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Email</th>
                             <th>Phone Number</th>
                             <th>Address</th>
@@ -143,11 +144,19 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                             <tr class="text-center">
                                 <td><?php echo htmlspecialchars($customer['id']); ?></td>
                                 <td>
-                                    <img src='/public/<?= !empty($customer['image_url']) ? htmlspecialchars($customer['image_url']) : 'path/to/default/image.jpg'; ?>'
-                                        class="img-thumbnail" style="max-width: 100px;">
+                                    <?php
+
+                                    $imageSrc = !empty($customer['image_url']) ? htmlspecialchars($customer['image_url']) : '/public/images/admin-user-profile.png';
+                                    ?>
+
+                                    <img src="<?= $imageSrc; ?>" class="img-thumbnail" style="width: 30px; height: 30px;">
+
                                 </td>
                                 <td class="text-truncate" style="max-width: 150px;">
-                                    <?php echo htmlspecialchars($customer['username']); ?>
+                                    <?php echo htmlspecialchars($customer['first_name']); ?>
+                                </td>
+                                <td class="text-truncate" style="max-width: 150px;">
+                                    <?php echo htmlspecialchars($customer['last_name']); ?>
                                 </td>
                                 <td class="text-truncate" style="max-width: 120px;">
                                     <?php echo htmlspecialchars($customer['email']); ?>
@@ -168,7 +177,7 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                                     <div class="d-flex align-items-center">
                                         <a href="/admin/customer_edit/<?= htmlspecialchars($customer['id']); ?>"
                                             class="btn btn-success btn-sm">
-                                            <i class="bi bi-eye"></i>
+                                            <i class="bi bi-pencil"></i>
                                         </a>
                                         <form id="deleteForm-<?= htmlspecialchars($customer['id']); ?>"
                                             action="/admin/deleteCustomer" method="POST"
@@ -181,9 +190,6 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                                             </button>
                                         </form>
                                     </div>
-
-
-
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -236,17 +242,15 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
         });
     }
 </script>
-
 <script>
-
     document.addEventListener('DOMContentLoaded', function () {
-        // Handle Sign Up Form Submission
-        document.getElementById('registerForm').addEventListener('submit', function (event) {
+        // Handle Create Customer Form Submission
+        document.getElementById('createCustomerForm').addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent default form submission
 
             const formData = new FormData(this); // Get form data
 
-            fetch('/customers/login_and_register', {
+            fetch('/admin/manage_customers', { // Adjusted endpoint for creating a customer
                 method: 'POST',
                 body: formData
             })
@@ -255,7 +259,10 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                     if (data.emailTaken) {
                         showAlert('error', 'This email is already in use.');
                     } else if (data.registrationSuccess) {
-                        showAlert('success', 'Registration successful! You can now log in.');
+                        showAlert('success', 'Registration successful! Customer has been created.');
+                        // Optionally, close the modal and refresh the page or update the table
+                        $('#createCustomerModal').modal('hide');
+                        location.reload(); // Reload to reflect new customer in the list
                     } else {
                         showAlert('error', 'Registration failed. Please try again.');
                     }
@@ -266,7 +273,20 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                 });
         });
 
+        // Function to show alerts
+        function showAlert(type, message) {
+            Swal.fire({
+                icon: type,
+                title: type === 'error' ? 'Error!' : 'Success!',
+                text: message,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ok'
+            });
+        }
+    });
 </script>
+
 <script src="assets/js/app.js"></script>
 <!-- SweetAlert Script -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

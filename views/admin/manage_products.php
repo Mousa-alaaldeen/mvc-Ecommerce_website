@@ -22,38 +22,43 @@ $total_pages = ceil($total_items / $items_per_page);
 <div class="app-wrapper">
 	<div class="app-content pt-3 p-md-3 p-lg-4">
 		<div class="container-xl">
-			<div class="row g-3 mb-4 align-items-center justify-content-between">
+			<div class="row g-3 mb-4 align-items-center justify-content-between shadow-sm p-3 bg-light rounded">
 				<!-- Page Title -->
 				<div class="col-auto">
-					<h1 class="app-page-title mb-0 text-success">Products</h1>
+					<h1 class="app-page-title mb-0 text-success fw-bold"
+						style="font-size: 2rem; text-shadow: 1px 1px 2px #d4edda;">
+						<i class="bi bi-box-seam me-2"></i> Products
+					</h1>
 				</div>
 				<!-- Utilities and Search Form -->
 				<div class="col-auto">
 					<div class="page-utilities">
-						<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+						<div class="row g-2 align-items-center">
+							<!-- Search Form -->
 							<div class="col-auto">
 								<form class="d-flex align-items-center" method="GET" action="">
 									<input type="text" id="search-docs" name="search"
 										value="<?= htmlspecialchars($search_query) ?>"
-										class="form-control me-2 rounded-pill border-primary" placeholder="Search..."
-										aria-label="Search">
-									<button type="submit" class="btn btn-warning rounded-pill">
-										<i class="fas fa-search text-dark"></i>
+										class="form-control rounded-pill border-primary me-2"
+										placeholder="Search Products..." aria-label="Search"
+										style=" border: 1px solid #d1e7dd;">
+									<button type="submit" class="btn btn-primary rounded-pill">
+										<i class="fas fa-search text-white"></i>
 									</button>
 								</form>
 							</div>
-							<!-- Create Product Modal Trigger -->
+							<!-- Add New Product Button -->
 							<div class="col-auto">
-								<a class="btn btn-success d-flex align-items-center" href="#" data-bs-toggle="modal"
-									data-bs-target="#createProductModal">
-									<i class="fas fa-plus me-2"></i> Create New Product
+								<a class="btn btn-success text-white d-flex align-items-center rounded-pill px-3 py-2"
+									href="#" data-bs-toggle="modal" data-bs-target="#createProductModal">
+									<i class="bi bi-plus-circle me-2"></i> Add New Products
 								</a>
 							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
+
 			<!-- Edit Product Modal -->
 			<!-- <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
 				aria-hidden="true">
@@ -188,8 +193,11 @@ $total_pages = ceil($total_items / $items_per_page);
 						<tr class="text-center">
 							<td><?php echo htmlspecialchars($product['id']); ?></td>
 							<td>
-								<img src='/public/<?= !empty($product['image_url']) ? htmlspecialchars($product['image_url']) : 'path/to/default/image.jpg'; ?>'
-									class="img-thumbnail" style="max-width: 100px;">
+								<?php
+								$imageSrc = !empty($product['image_url']) ? htmlspecialchars($product['image_url']) : 'path/to/placeholder-image.jpg';
+								?>
+
+								<img src="<?= $imageSrc; ?>" class="img-thumbnail" style="width: 30px; height: 30px;">
 							</td>
 							<td class="text-truncate" style="max-width: 150px;">
 								<?php
