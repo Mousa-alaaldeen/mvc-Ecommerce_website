@@ -342,83 +342,109 @@ class AdminController extends Controller
         $this->view('admin/product_edit', ['Product' => $categories]);
 
     }
-    public function manageOrders()
-    {
-        $orders = $this->model('Order')->All();
-        $this->view('admin/manage_orders', ['orders' => $orders]);
-    }
-
-    // public function updateProduct($id)
-    // {
-    //     //dd($id);
-    //     $data = [
-    //         'price' => $_POST['price'],
-    //         'description' => $_POST['description'],
-    //         'category_id' => $_POST['category_id'],
-    //         'average_rating' => $_POST['average_rating'],
-    //         'stock_quantity' => $_POST['stock_quantity'],
-    //     ];
-    //     $product = $this->model('Product')->find($id);
-    //     //dd($product);
-
-    //     $this->model('Product')->update($id, $data);
-
-
-    //     $_SESSION['message'] = "Product updated successfully!";
-
-    //     $this->view('admin/product_edit', ['product' => $product]);
-
-    //     var_dump($_POST);
-    //     exit;
-    // }
-
     public function updateProduct($id)
     {
+        // Fetch all categories to display when updating the product
         $categories = $this->model('Category')->all();
-        
-        if (isset($_POST['product_name'], $_POST['price'], $_POST['description'], $_POST['category_id'], $_POST['stock_quantity'])) {
-            $productData = [
-                'product_name' => $_POST['product_name'],
-                'price' => $_POST['price'],
-                'description' => $_POST['description'],
-                'category_id' => $_POST['category_id'],
-               
-                'stock_quantity' => $_POST['stock_quantity'],
-            ];
-            
-            $this->model('Product')->update($id, $productData);
-            
-            $uploadDir = 'uploads/';
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0777, true);
-            }
-            
-            if (isset($_FILES['image_url']) && $_FILES['image_url']['error'] == 0) {
-                $imageName = basename($_FILES['image_url']['name']);
-                $imagePath = $uploadDir . $imageName;
-                
-                if (move_uploaded_file($_FILES['image_url']['tmp_name'], $imagePath)) {
-                    $imageData = [
-                        'product_id' => $id,
-                        'image_url' => $imagePath,
-                    ];
-                    
-                   
-                    $this->model('ProductImage')->update($id, $imageData);
-                    $_SESSION['message'] = "Product updated successfully with image!";
+    
+        // Retrieve the current product data
+        $existingProduct = $this->model('Product')->getProductWithImage($id);
+    
+        // Store the new data for the update, keeping previous values if inputs are null
+        $data = [
+            'description' => !empty($_POST['description']) ? $_POST['description'] : $existingProduct['description'],
+            'price' => !empty($_POST['price']) ? $_POST['price'] : $existingProduct['price'],
+            'category_id' => !empty($_POST['category_id']) ? $_POST['category_id'] : $existingProduct['category_id'],
+            'stock_quantity' => !empty($_POST['stock_quantity']) ? $_POST['stock_quantity'] : $existingProduct['stock_quantity'],
+        ];
+    
+        // Update the product data
+        $this->model('Product')->update($id, $data);
+    
+        // Check if an image file is uploaded
+        if (!empty($_FILES['image_url']['name'])) {
+            $targetDir = 'public/uploads/';
+            $targetFile = $targetDir . basename($_FILES['image_url']['name']);
+            $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+    
+            // Verify the uploaded file type is an image
+            if (in_array($imageFileType, ['jpg', 'png', 'jpeg', 'gif'])) {
+                if (move_uploaded_file($_FILES['image_url']['tmp_name'], $targetFile)) {
+                    $imageUrl = $targetFile;
+                    // Update the image URL in the database
+                    $this->model('ProductImage')->update($id, $imageUrl);
                 } else {
-                    $_SESSION['message'] = "Failed to upload image.";
+                    $_SESSION['error'] = "Sorry, there was an error uploading your file.";
+                    return;
                 }
             } else {
-                $_SESSION['message'] = "Product updated successfully!";
+                $_SESSION['error'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                return;
             }
-        } else {
-            $_SESSION['message'] = "Please fill in all required fields.";
         }
-        
+    
+        // Fetch the updated product data to display in the view
         $product = $this->model('Product')->getProductWithImage($id);
-        $this->view('admin/product_edit', ['product' => $product, 'categories' => $categories]);
+    
+        // Set a success message after updating
+        $_SESSION['message'] = "Product updated successfully!";
+    
+        // Display the product edit view with updated data
+        $this->view('admin/product_edit', [
+            'product' => $product,
+            'categories' => $categories
+        ]);
+        exit;
     }
+    
+    
+    // public function updateProduct($id)
+    // {
+    //     $categories = $this->model('Category')->all();
+        
+    //     if (isset($_POST['product_name'], $_POST['price'], $_POST['description'], $_POST['category_id'], $_POST['stock_quantity'])) {
+    //         $productData = [
+    //             'product_name' => $_POST['product_name'],
+    //             'price' => $_POST['price'],
+    //             'description' => $_POST['description'],
+    //             'category_id' => $_POST['category_id'],
+               
+    //             'stock_quantity' => $_POST['stock_quantity'],
+    //         ];
+            
+    //         $this->model('Product')->update($id, $productData);
+            
+    //         $uploadDir = 'uploads/';
+    //         if (!is_dir($uploadDir)) {
+    //             mkdir($uploadDir, 0777, true);
+    //         }
+            
+    //         if (isset($_FILES['image_url']) && $_FILES['image_url']['error'] == 0) {
+    //             $imageName = basename($_FILES['image_url']['name']);
+    //             $imagePath = $uploadDir . $imageName;
+                
+    //             if (move_uploaded_file($_FILES['image_url']['tmp_name'], $imagePath)) {
+    //                 $imageData = [
+    //                     'product_id' => $id,
+    //                     'image_url' => $imagePath,
+    //                 ];
+                    
+                   
+    //                 $this->model('ProductImage')->update($id, $imageData);
+    //                 $_SESSION['message'] = "Product updated successfully with image!";
+    //             } else {
+    //                 $_SESSION['message'] = "Failed to upload image.";
+    //             }
+    //         } else {
+    //             $_SESSION['message'] = "Product updated successfully!";
+    //         }
+    //     } else {
+    //         $_SESSION['message'] = "Please fill in all required fields.";
+    //     }
+        
+    //     $product = $this->model('Product')->getProductWithImage($id);
+    //     $this->view('admin/product_edit', ['product' => $product, 'categories' => $categories]);
+    // }
     
 
     public function deleteProduct()
@@ -463,7 +489,7 @@ class AdminController extends Controller
 
         $this->view('admin/category_edit', ['category' => $category]);
 
-        var_dump($_POST);
+   
         exit;
     }
 
