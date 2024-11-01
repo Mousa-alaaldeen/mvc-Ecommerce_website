@@ -45,11 +45,11 @@ class AdminController extends Controller
     }
 
     // Manage orders
-    // public function manageOrders()
-    // {
-    //     $orders = $this->model('Order')->getAllOrders();
-    //     $this->view('admin/manage_orders', ['orders' => $orders]);
-    // }
+    public function manageOrders()
+    {
+        $orders = $this->model('Order')->all();
+        $this->view('admin/manage_orders', ['orders' => $orders]);
+    }
 
 
 
@@ -317,11 +317,11 @@ class AdminController extends Controller
     }
 
     // Handle messages
-    public function messages()
-    {
-        $messages = $this->model('Message')->getAllMessages();
-        $this->view('admin/messages', ['messages' => $messages]);
-    }
+    // public function messages()
+    // {
+    //     $messages = $this->model('Message')->getAllMessages();
+    //     $this->view('admin/messages', ['messages' => $messages]);
+    // }
 
     // Account settings page
     // public function accountSettings()
@@ -336,12 +336,12 @@ class AdminController extends Controller
         $product = $this->model('Product')->find($id);
         $this->view('admin/product_edit', ['product' => $product, 'categories' => $categories]);
     }
-    public function gitCategory()
-    {
-        $categories = $this->model('Product')->getProducts();
-        $this->view('admin/product_edit', ['Product' => $categories]);
+    // public function gitCategory()
+    // {
+    //     $categories = $this->model('Product')->getProducts();
+    //     $this->view('admin/product_edit', ['Product' => $categories]);
 
-    }
+    // }
     public function updateProduct($id)
     {
         // Fetch all categories to display when updating the product
@@ -463,6 +463,96 @@ class AdminController extends Controller
         header("Location: /admin/manage_products");
         exit;
     }
+    // public function viewCategory($id)
+    // {
+    //     $category = $this->model('Category')->find($id);
+    //     $this->view('admin/category_view', ['category' => $category]);
+    // }
+    // public function editCategory($id)
+    // {
+    //     $category = $this->model('Category')->find($id);
+    //     $this->view('admin/category_edit', ['category' => $category]);
+    // }
+
+    // public function updateCategory($id)
+    // {
+    //     $data = [
+    //         'category_name' => $_POST['category_name'],
+    //         'image_url' => $_POST['image_url'],
+    //     ];
+
+    //     $category = $this->model('Category')->find($id);
+
+    //     $this->model('Category')->update($id, $data);
+
+    //     $_SESSION['message'] = "Category updated successfully!";
+
+    //     $this->view('admin/category_edit', ['category' => $category]);
+
+   
+    //     exit;
+    // }
+
+    // public function deleteCategory()
+    // {
+    //     $id = $_POST['categoryId'] ?? null;
+
+    //     if (!$id || !$this->model('Category')->find($id)) {
+    //         $_SESSION['error'] = "Category not found!";
+    //         header("Location: /admin/manage_category");
+    //         exit;
+    //     }
+
+    //     $this->model('Category')->delete($id);
+
+    //     $_SESSION['message'] = "Category deleted successfully!";
+    //     header("Location: /admin/manage_category");
+    //     exit;
+    // }
+    public function accountSettings()
+    {
+        // $admin = $this->model('Admin')->All($_SESSION['admin_id']);
+        // $this->view('admin/account_settings', ['admins' => $admin]);
+        $id = 1;
+        $admin = $this->model('Admin')->find($id);
+        $this->view('admin/account_settings', ['admin' => $admin]);
+    }
+
+    // ===================================================
+    public function createCategory()
+    {
+        if (isset($_POST['category_name']) && !empty($_FILES['image_url']['name'])) {
+            // Prepare category data
+            $categoryData = [
+                'category_name' => $_POST['category_name'],
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+
+            // Handle file upload
+            $uploadDir = 'uploads/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            $imagePath = $uploadDir . basename($_FILES['image_url']['name']);
+            if (move_uploaded_file($_FILES['image_url']['tmp_name'], $imagePath)) {
+                $categoryData['image_url'] = $imagePath;
+            } else {
+                $_SESSION['message'] = "Failed to upload image.";
+            }
+
+            // Save to database
+            $this->model('Category')->create($categoryData);
+        } else {
+            $_SESSION['message'] = "Please fill in all required fields.";
+        }
+
+        // Retrieve all categories for the view
+        $categories = $this->model('Category')->all(); // Assuming getAll() retrieves all categories
+        $this->view('admin/manage_category', ['categories' => $categories]);
+    }
+
+
     public function viewCategory($id)
     {
         $category = $this->model('Category')->find($id);
@@ -489,7 +579,7 @@ class AdminController extends Controller
 
         $this->view('admin/category_edit', ['category' => $category]);
 
-   
+        var_dump($_POST);
         exit;
     }
 
@@ -509,17 +599,21 @@ class AdminController extends Controller
         header("Location: /admin/manage_category");
         exit;
     }
-    public function accountSettings()
-    {
-        // $admin = $this->model('Admin')->All($_SESSION['admin_id']);
-        // $this->view('admin/account_settings', ['admins' => $admin]);
-        $id = 1;
-        $admin = $this->model('Admin')->find($id);
-        $this->view('admin/account_settings', ['admin' => $admin]);
-    }
 
-    // ===================================================
 
+
+
+
+
+
+
+
+
+
+
+
+
+    
     // Admin logout
     public function logout()
     {
@@ -527,6 +621,56 @@ class AdminController extends Controller
         session_destroy();
         header('Location: /admin/login');
     }
+    public function messages()
+    {
+        $messages = $this->model('Message')->all();
+        $this->view('admin/messages', ['messages' => $messages]);
+    }
+    public function manageAdmin()
+    {
+        // Logic for managing admin accounts
+        $admins = $this->model('Admin')->all();
+        $this->view('admin/super_manage_admin', ['admins' => $admins]);
+    }
+//     public function manageAdmin()
+//     {
+//         header('Location: /admin/dashboard');
+//         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'super admin') {
+
+//             exit();
+//         }
+
+//         $admins = $this->model('Admin')->getAllAdmins();
+//         $this->view('admin/super_manage_admin', ['admins' => $admins]);
+//     }
+//     public function addAdmin() {
+//         if (isset($_POST['username'], $_POST['email'], $_POST['password'], $_POST['role'])) {
+//             $existingAdmin = $this->model('Admin')->findByEmail($_POST['email']);
+
+//             if ($existingAdmin) {
+//                 echo "Error: Email already exists.";
+//                 return; 
+//             }
+
+//             $data = [
+//                 "username" => $_POST['username'],
+//                 "email" => $_POST['email'],
+//                 "password" => password_hash($_POST['password'], PASSWORD_DEFAULT),
+//                 "role" => $_POST['role'],
+//             ];
+
+
+//             $this->model('Admin')->create($data);
+
+
+//             $admins = $this->model('Admin')->all();
+//             $this->view('super_manage_admin', ['admins' => $admins]);
+//         } else {
+//             echo "Error: Required data not found.";
+//         }
+//     }
+
+// }
 }
 
 

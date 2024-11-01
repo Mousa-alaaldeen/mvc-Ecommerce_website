@@ -45,14 +45,15 @@
 						<div class="search-mobile-trigger d-sm-none col">
 							<i class="search-mobile-trigger-icon fa-solid fa-magnifying-glass"></i>
 						</div><!--//col-->
-						<div class="app-search-box col">
+						<!-- <div class="app-search-box col">
 							<form class="app-search-form">
 								<input type="text" placeholder="Search..." name="search"
 									class="form-control search-input">
 								<button type="submit" class="btn search-btn btn-primary" value="Search"><i
 										class="fa-solid fa-magnifying-glass"></i></button>
 							</form>
-						</div><!--//app-search-box-->
+						</div> -->
+						<!--//app-search-box-->
 						<div class="app-utilities col-auto">
 							<div class="app-utility-item app-notifications-dropdown dropdown">
 								<a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle"
@@ -341,7 +342,22 @@
 								<span class="nav-link-text">Charts</span>
 							</a><!--//nav-link-->
 						</li><!--//nav-item-->
-						
+						<li class="nav-item">
+							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+							<a class="nav-link" href="/admin/super_manage_admin">
+								<span class="nav-icon">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart-line"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd"
+											d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z" />
+									</svg>
+								</span>
+								<span class="nav-link-text">Super Admin</span>
+							</a><!--//nav-link-->
+						</li><!--//nav-item-->
+						<!-- <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'super_admin'): ?>
+            <li><a href="/admin/manage-admin"></a></li>
+<?php endif; ?> -->
 					</ul><!--//app-menu-->
 				</nav>
 				<div class="app-sidepanel-footer">

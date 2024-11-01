@@ -7,93 +7,108 @@
 </div><!--//app-sidepanel-->
 </header><!--//app-header-->
 
+
 <div class="app-wrapper">
 
 	<div class="app-content pt-3 p-md-3 p-lg-4">
 		<div class="container-xl">
+		<div class="row g-3 mb-4 align-items-center justify-content-between shadow-sm p-3 bg-light rounded">
 
-			<h1 class="app-page-title text-success">Dashboard</h1>
+			<h1 class="app-page-title text-success"><svg width="1em"  height="1em" viewBox="0 0 16 16" class="bi bi-house-door me-3 mt-0 mb-2 " fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"></path>
+										<path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"></path>
+									</svg>Dashboard</h1>
+</div>
+<div class="app-card alert alert-dismissible shadow-sm mb-4 border-left-decoration" role="alert">
+    <div class="inner">
+        <div class="app-card-body p-3 p-lg-4">
+            <h3 class="mb-3">Welcome Admin!</h3>
+            <div class="row gx-5 gy-3">
+                <div class="col-12 col-lg-9">
+                    <div>
+                        Your advanced control center is ready. This powerful and intuitive dashboard equips
+                        you with everything you need to manage your e-commerce empire. From comprehensive
+                        charts that visualize your data to robust tools for managing products and
+                        categories, everything is at your fingertips. Ready to optimize, innovate, and
+                        elevate your business to new heights!
+                    </div>
+                </div><!--//col-->
+            </div><!--//col-->
+        </div><!--//row-->
+        <!-- Close Button -->
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div><!--//app-card-body-->
+</div><!--//inner-->
 
-			<div class="app-card alert alert-dismissible shadow-sm mb-4 border-left-decoration" role="alert">
-				<div class="inner">
-					<div class="app-card-body p-3 p-lg-4">
-						<h3 class="mb-3">Welcome Admin!</h3>
-						<div class="row gx-5 gy-3">
-							<div class="col-12 col-lg-9">
-
-								<div>
-
-									Your advanced control center is ready. This powerful and intuitive dashboard equips
-									you with everything you need to manage your e-commerce empire. From comprehensive
-									charts that visualize your data, to robust tools for managing products and
-									categories, everything is at your fingertips. Ready to optimize, innovate, and
-									elevate your business to new heights!
-
-									.</div>
-							</div><!--//col-->
-
-						</div><!--//col-->
-					</div><!--//row-->
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-				</div><!--//app-card-body-->
-
-			</div><!--//inner-->
 		</div><!--//app-card-->
 
 		<div class="row g-4 mb-4">
-			<div class="col-6 col-lg-3">
-				<div class="app-card app-card-stat shadow-sm h-100 hover-animation">
-					<div class="app-card-body p-3 p-lg-4">
-						<h4 class="stats-type mb-1">Total Sales</h4>
-						<div class="stats-figure">
+    <div class="col-6 col-lg-3">
+        <div class="app-card app-card-stat shadow-sm h-100 hover-animation">
+            <div class="app-card-body p-3 p-lg-4">
+                <h4 class="stats-type mb-1">Total Sales</h4>
+                <div class="stats-figure d-flex align-items-center justify-content-center">
+                    <img src="https://www.svgrepo.com/show/474976/sales-performance.svg" alt="Sales Performance Icon" width="30" height="40" class="me-2">
+                    <span class="fw-bold fs-4 text-center">$12,628</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-center stats-meta text-success">
+                    <span class="fw-bold fs-4 text-center">20%</span>
+                </div>
+            </div>
+            <a class="app-card-link-mask" href="#"></a>
+        </div>
+    </div>
 
-							$12,628
-						</div>
-						<div class="stats-meta text-success">
-							<i class="fa-solid fa-arrow-trend-up"></i>
-							20%
-						</div>
-					</div>
-					<a class="app-card-link-mask" href="#"></a>
-				</div>
-			</div>
+    <div class="col-6 col-lg-3">
+        <div class="app-card app-card-stat shadow-sm h-100 hover-animation">
+            <div class="app-card-body p-3 p-lg-4">
+                <h4 class="stats-type mb-1">Expenses</h4>
+                <div class="stats-figure d-flex align-items-center justify-content-center">
+                    <img src="https://www.svgrepo.com/show/233959/money.svg" alt="Money Icon" width="30" height="40" class="me-2">
+                    <span class="fw-bold fs-4 text-center">$2,250</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-center stats-meta text-success">
+                    <span class="fw-bold fs-4 text-center">5%</span>
+                </div>
+            </div>
+            <a class="app-card-link-mask" href="#"></a>
+        </div>
+    </div>
+    
+    <div class="col-6 col-lg-3">
+        <div class="app-card app-card-stat shadow-sm h-100 hover-animation">
+            <div class="app-card-body p-3 p-lg-4">
+                <h4 class="stats-type mb-1">Projects</h4>
+                <div class="stats-figure d-flex align-items-center justify-content-center">
+                    <img src="https://www.svgrepo.com/show/428770/planning-managing-agenda.svg" alt="Planning Managing Agenda Icon" width="30" height="40" class="me-2">
+                    <span class="fw-bold fs-4 text-center">23</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-center stats-meta text-success">
+                    <span class="fw-bold fs-4 text-center">60%</span>
+                </div>
+            </div>
+            <a class="app-card-link-mask" href="#"></a>
+        </div>
+    </div>
+    
+    <div class="col-6 col-lg-3">
+        <div class="app-card app-card-stat shadow-sm h-100 hover-animation">
+            <div class="app-card-body p-3 p-lg-4">
+                <h4 class="stats-type mb-1">Invoices</h4>
+                <div class="stats-figure d-flex align-items-center justify-content-center">
+                    <img src="https://www.svgrepo.com/show/289576/invoice-bill.svg" alt="Invoice Bill Icon" width="30" height="40" class="me-2">
+                    <span class="fw-bold fs-4 text-center">6</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-center stats-meta text-success">
+                    <span class="fw-bold fs-4 text-center">30%</span>
+                </div>
+            </div>
+            <a class="app-card-link-mask" href="#"></a>
+        </div>
+    </div>
+</div>
 
-			<div class="col-6 col-lg-3">
-				<div class="app-card app-card-stat shadow-sm h-100 hover-animation">
-					<div class="app-card-body p-3 p-lg-4">
-						<h4 class="stats-type mb-1">Expenses</h4>
-						<div class="stats-figure"><i class="bi bi-currency-dollar"></i> $2,250</div>
-						<div class="stats-meta text-success">
-							<i class="bi bi-arrow-down"></i> 5%
-							<i class="fa-solid fa-money-bill"></i>
-						</div>
-					</div>
-					<a class="app-card-link-mask" href="#"></a>
-				</div>
-			</div>
-			<div class="col-6 col-lg-3">
-				<div class="app-card app-card-stat shadow-sm h-100 hover-animation">
-					<div class="app-card-body p-3 p-lg-4">
-						<h4 class="stats-type mb-1">Projects</h4>
-						<div class="stats-figure"><i class="bi bi-clipboard-check"></i> 23</div>
-						<i class="fa-brands fa-r-project text-success"></i>
-
-					</div>
-					<a class="app-card-link-mask" href="#"></a>
-				</div>
-			</div>
-			<div class="col-6 col-lg-3">
-				<div class="app-card app-card-stat shadow-sm h-100 hover-animation">
-					<div class="app-card-body p-3 p-lg-4">
-						<h4 class="stats-type mb-1">Invoices</h4>
-						<div class="stats-figure"><i class="bi bi-file-earmark-text"></i> 6</div>
-						<i class="fa-solid fa-file-invoice-dollar text-success"></i>
-					</div>
-					<a class="app-card-link-mask" href="#"></a>
-				</div>
-			</div>
-		</div>
-
+	
 		<div class="row g-4 mb-4">
 			<div class="col-12">
 				<div class="app-card app-card-chart h-100 shadow-sm hover-animation">
@@ -396,3 +411,4 @@
 
 	</div><!--//container-fluid-->
 </div><!--//app-content-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

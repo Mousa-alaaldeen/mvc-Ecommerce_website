@@ -4,12 +4,15 @@ require "views/partials/admin_header.php";
 $items_per_page = 20;
 $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $current_page = max($current_page, 1);
-$total_items = count($customers);
+
+// Ensure $customers is an array before using count()
+$total_items = isset($customers) && is_array($customers) ? count($customers) : 0;
 $total_pages = ceil($total_items / $items_per_page);
 $start_index = ($current_page - 1) * $items_per_page;
+
 // Check if search term is set and not empty
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-if (!empty($search)) {
+if (!empty($search) && is_array($customers)) {
     // Filter customers based on search term
     $filtered_customers = array_filter($customers, function ($customer) use ($search) {
         return stripos($customer['first_name'], $search) !== false ||
@@ -19,10 +22,10 @@ if (!empty($search)) {
             stripos($customer['address'], $search) !== false;
     });
 } else {
-
-    $filtered_customers = $customers;
+    $filtered_customers = $customers ?? []; // Ensure $filtered_customers is an array
 }
-// Pagination logic
+
+// Update pagination logic after filtering
 $total_items = count($filtered_customers);
 $total_pages = ceil($total_items / $items_per_page);
 $start_index = ($current_page - 1) * $items_per_page;
@@ -36,7 +39,7 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                 <div class="col-auto">
                     <h1 class="app-page-title mb-0 text-success fw-bold"
                         style="font-size: 2rem; text-shadow: 1px 1px 2px #d4edda;">
-                        <i class="bi bi-people-fill me-2"></i>Customers
+                        <i class="fas fa-users me-3"></i>Customers
                     </h1>
                 </div>
 
@@ -54,7 +57,8 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                                             placeholder="Search Customers....">
                                     </div>
                                     <div class="col-auto">
-                                        <button type="submit" class="btn btn-primary rounded-pill">
+                                        <button type="submit" class="btn rounded-pill"
+                                            style="background-color: #5bb377; border-color: #5bb377;">
                                             <i class="fas fa-search text-white"></i>
                                         </button>
                                     </div>
@@ -71,6 +75,7 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                     </div>
                 </div>
             </div>
+
             <!-- Create Customer Modal -->
             <div class="modal fade" id="createCustomerModal" tabindex="-1" aria-labelledby="createCustomerModalLabel"
                 aria-hidden="true">
@@ -88,7 +93,6 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                                 </div>
                             </div>
                             <div class="modal-body">
-
                                 <div class="row mb-3">
                                     <div class="col">
                                         <label for="first_name" class="form-label">First name</label>
@@ -109,7 +113,6 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                                         <input type="text" class="form-control" id="phone_number" name="phone_number">
                                     </div>
                                 </div>
-
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
                                     <input type="password" class="form-control" id="password" name="password">
@@ -145,12 +148,9 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                                 <td><?php echo htmlspecialchars($customer['id']); ?></td>
                                 <td>
                                     <?php
-
                                     $imageSrc = !empty($customer['image_url']) ? htmlspecialchars($customer['image_url']) : '/public/images/admin-user-profile.png';
                                     ?>
-
                                     <img src="<?= $imageSrc; ?>" class="img-thumbnail" style="width: 30px; height: 30px;">
-
                                 </td>
                                 <td class="text-truncate" style="max-width: 150px;">
                                     <?php echo htmlspecialchars($customer['first_name']); ?>
@@ -197,124 +197,48 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                 </table>
             </div>
             <?php if ($total_pages > 1): ?>
-                <nav class="app-pagination ">
+                <nav class="app-pagination">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item <?= $current_page <= 1 ? 'disabled' : '' ?>">
-                            <a class="page-link bg-primary text-white" href="?page=<?= $current_page - 1 ?>" tabindex="-1"
-                                aria-disabled="true">Previous</a>
+                        <li class="page-item <?= $current_page == 1 ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="?page=<?= $current_page - 1; ?>" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
                         </li>
-                        <?php for ($page = 1; $page <= $total_pages; $page++): ?>
-                            <li class="page-item <?= $page == $current_page ? 'active' : '' ?>">
-                                <a class="page-link <?= $page == $current_page ? 'bg-success text-white' : 'bg-light text-dark' ?>"
-                                    href="?page=<?= $page ?>"><?= $page ?></a>
+                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                            <li class="page-item <?= $i == $current_page ? 'active' : ''; ?>">
+                                <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
                             </li>
                         <?php endfor; ?>
-                        <li class="page-item <?= $current_page >= $total_pages ? 'disabled' : '' ?>">
-                            <a class="page-link bg-primary text-white" href="?page=<?= $current_page + 1 ?>">Next</a>
+                        <li class="page-item <?= $current_page == $total_pages ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="?page=<?= $current_page + 1; ?>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
                         </li>
                     </ul>
                 </nav>
             <?php endif; ?>
-            <?php require "views/partials/admin_footer.php"; ?>
         </div>
     </div>
 </div>
 
-
 <script>
-    function confirmDelete(event, customerId) {
-        event.preventDefault(); // Prevent the form from submitting immediately
-
-        // Trigger SweetAlert confirmation dialog
+    function confirmDelete(event, id) {
+        event.preventDefault();
         Swal.fire({
-            title: 'Are you sure?',
-            text: "This action cannot be undone!",
-            icon: 'warning',
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: '#D26D69',
-            cancelButtonColor: '#15A362',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                // Submit the form if user confirms
-                document.getElementById('deleteForm-' + customerId).submit();
+                document.getElementById("deleteForm-" + id).submit();
+                Swal.fire("Deleted!", "The customer has been deleted.", "success");
             }
         });
     }
 </script>
-<script>
-    document.getElementById('email').addEventListener('blur', function() {
-    let email = this.value;
 
-    fetch('/admin/manage_customers', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email: email })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.emailTaken) {
-            document.getElementById('emailError').innerText = 'Email is already taken.';
-        } else {
-            document.getElementById('emailError').innerText = '';
-        }
-    })
-    .catch(error => console.error('Error:', error));
-});
-</script>
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Handle Create Customer Form Submission
-        document.getElementById('createCustomerForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent default form submission
-
-            const formData = new FormData(this); // Get form data
-
-            fetch('/admin/manage_customers', { // Adjusted endpoint for creating a customer
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.emailTaken) {
-                        showAlert('error', 'This email is already in use.');
-                    } else if (data.registrationSuccess) {
-                        showAlert('success', 'Registration successful! Customer has been created.');
-                        // Optionally, close the modal and refresh the page or update the table
-                        $('#createCustomerModal').modal('hide');
-                        location.reload(); // Reload to reflect new customer in the list
-                    } else {
-                        showAlert('error', 'Registration failed. Please try again.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    showAlert('error', 'An error occurred. Please try again later.');
-                });
-        });
-
-        // Function to show alerts
-        function showAlert(type, message) {
-            Swal.fire({
-                icon: type,
-                title: type === 'error' ? 'Error!' : 'Success!',
-                text: message,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ok'
-            });
-        }
-    });
-</script> -->
-
-<script src="assets/js/app.js"></script>
-<!-- SweetAlert Script -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<!-- JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<?php require "views/partials/admin_footer.php"; ?>
