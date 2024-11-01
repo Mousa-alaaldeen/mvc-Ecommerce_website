@@ -242,7 +242,7 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
         });
     }
 </script>
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Handle Create Customer Form Submission
         document.getElementById('createCustomerForm').addEventListener('submit', function (event) {
@@ -285,7 +285,7 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
             });
         }
     });
-</script>
+</script> -->
 
 <script src="assets/js/app.js"></script>
 <!-- SweetAlert Script -->
