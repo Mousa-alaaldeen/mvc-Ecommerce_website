@@ -267,12 +267,12 @@
 				
 						<li class="nav-item">
 							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-							<a class="nav-link" href="/admin/manage_testimonials">
+							<a class="nav-link" href="/admin/messages">
 							<span class="nav-icon">
 							<i class="fas fa-comments"></i> 
 
 									</span>
-								<span class="nav-link-text">testimonials</span>
+								<span class="nav-link-text">messages</span>
 							</a><!--//nav-link-->
 						</li><!--//nav-item-->
 					
