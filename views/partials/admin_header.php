@@ -194,7 +194,7 @@
 			<div class="sidepanel-inner d-flex flex-column">
 				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
 				
-				<a class="app-logo" href="index.php">
+				<a class="app-logo" href="/admin/dashboard">
     <img style="width: 45px; height: auto;" src="http://localhost:8888/public/images/Logo%20(2).png" alt="Logo">
     <span class="ms-2" style="font-size: 20px; font-style: italic;">Admin Dashboard</span>
 </a>

@@ -522,35 +522,40 @@ class AdminController extends Controller
     public function createCategory()
     {
         if (isset($_POST['category_name']) && !empty($_FILES['image_url']['name'])) {
-            // Prepare category data
             $categoryData = [
                 'category_name' => $_POST['category_name'],
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
-
-            // Handle file upload
+    
             $uploadDir = 'uploads/';
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
+    
             $imagePath = $uploadDir . basename($_FILES['image_url']['name']);
+    
             if (move_uploaded_file($_FILES['image_url']['tmp_name'], $imagePath)) {
                 $categoryData['image_url'] = $imagePath;
+    
+                $categoryModel = $this->model('Category');
+                if ($categoryModel->create($categoryData)) {
+                    echo json_encode(['success' => true, 'message' => 'Category created successfully.']);
+                    exit;
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Failed to save category to the database.']);
+                    exit;
+                }
             } else {
-                $_SESSION['message'] = "Failed to upload image.";
+                echo json_encode(['success' => false, 'message' => 'Failed to upload image. Error: ' . $_FILES['image_url']['error']]);
+                exit;
             }
-
-            // Save to database
-            $this->model('Category')->create($categoryData);
         } else {
-            $_SESSION['message'] = "Please fill in all required fields.";
+            echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
+            exit;
         }
-
-        // Retrieve all categories for the view
-        $categories = $this->model('Category')->all(); // Assuming getAll() retrieves all categories
-        $this->view('admin/manage_category', ['categories' => $categories]);
     }
+    
 
 
     public function viewCategory($id)
@@ -596,7 +601,7 @@ class AdminController extends Controller
 
         $this->model('Category')->delete($id);
 
-        $_SESSION['message'] = "Category deleted successfully!";
+  
         header("Location: /admin/manage_category");
         exit;
     }

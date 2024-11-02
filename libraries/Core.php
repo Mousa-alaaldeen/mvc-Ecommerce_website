@@ -25,7 +25,7 @@ class Core
         'admin/category_view' => ['AdminController@viewCategory', 'GET'],
         'admin/category_edit' => ['AdminController@editCategory', 'GET'], // Specify POST for updates
         'admin/category_update' => ['AdminController@updateCategory', 'POST'], // Specify POST for updates
-        'admin/deleteCategory' => ['AdminController@deleteCategory', ['GET', 'POST']],
+'admin/deleteCategory' => ['AdminController@deleteCategory', ['GET', 'POST']],
         'admin/customer_edit' => ['AdminController@editCustomer', 'GET','GET'], // Specify POST for updates
         
         
