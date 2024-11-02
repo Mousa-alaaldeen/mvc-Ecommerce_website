@@ -42,7 +42,7 @@ $total_pages = ceil($total_items / $items_per_page);
 										class="form-control rounded-pill border-primary me-2"
 										placeholder="Search Products..." aria-label="Search"
 										style=" border: 1px solid #d1e7dd;">
-									<button type="submit" class="btn btn-primary rounded-pill">
+									<button type="submit" class="btn btn-success rounded-pill">
 										<i class="fas fa-search text-white"></i>
 									</button>
 								</form>
@@ -122,7 +122,7 @@ $total_pages = ceil($total_items / $items_per_page);
 							<div class="modal-header p-0">
 								<div
 									class="w-100 bg-success text-white p-2 d-flex justify-content-between align-items-center">
-									<h5 class="modal-title" id="createProductModalLabel">Create New Product</h5>
+									<h5 class="modal-title text-white" id="createProductModalLabel">Create New Product</h5>
 									<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
@@ -131,28 +131,28 @@ $total_pages = ceil($total_items / $items_per_page);
 								<div class="mb-3">
 									<label for="product_name" class="form-label">Product Name</label>
 									<input type="text" class="form-control" id="product_name" name="product_name"
-										required>
+										>
 								</div>
 								<div class="mb-3">
 									<label for="description" class="form-label">Description</label>
 									<textarea class="form-control" id="description" name="description" rows="2"
-										required></textarea>
+										></textarea>
 								</div>
 								<div class="row mb-3">
 									<div class="col">
 										<label for="price" class="form-label">Price (JD)</label>
 										<input type="number" class="form-control" id="price" name="price" step="0.01"
-											required>
+											>
 									</div>
 									<div class="col">
 										<label for="stock_quantity" class="form-label">Stock Quantity</label>
 										<input type="number" class="form-control" id="stock_quantity"
-											name="stock_quantity" required>
+											name="stock_quantity" >
 									</div>
 								</div>
 								<div class="mb-3">
 									<label for="category_id" class="form-label">Category</label>
-									<select class="form-select" id="category_id" name="category_id" required>
+									<select class="form-select" id="category_id" name="category_id" >
 										<option value="" disabled selected>Select a category</option>
 										<?php foreach ($categories as $category): ?>
 											<option value="<?php echo htmlspecialchars($category['id']); ?>">
@@ -164,12 +164,12 @@ $total_pages = ceil($total_items / $items_per_page);
 								<div class="mb-3">
 									<label for="image_url" class="form-label">Product Image</label>
 									<input type="file" class="form-control" id="image_url" name="image_url"
-										accept="image/*" required>
+										accept="image/*" >
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="submit" class="btn btn-success">Save Product</button>
-								<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-success text-white">Save Product</button>
+								<button type="button" class="btn btn-danger text-white" data-bs-dismiss="modal">Close</button>
 							</div>
 						</form>
 					</div>
@@ -306,3 +306,4 @@ $total_pages = ceil($total_items / $items_per_page);
 	// 	}
 	// });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

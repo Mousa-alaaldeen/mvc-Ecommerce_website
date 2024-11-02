@@ -37,9 +37,13 @@ class Core
         
        
        // Super Admin Routes
+    //    'admin/super_manage_admin' => ['AdminController@manageAdmin', ['GET', 'POST']],
+    //    'super_admin/add_admin' => ['SuperAdminController@addAdmin', ['GET', 'POST']],
+    //    'admin/deleteAdmin' => ['AdminController@manageAdmin', ['GET', 'POST']],
+
        'admin/super_manage_admin' => ['AdminController@manageAdmin', ['GET', 'POST']],
-       'super_admin/add_admin' => ['SuperAdminController@addAdmin', ['GET', 'POST']],
-     'admin/deleteAdmin' => ['AdminController@deleteAdmin', ['GET', 'POST']],
+       'admin/add_admin' => ['AdminController@addAdmin', ['GET', 'POST']],
+       'admin/delete_admin' => ['AdminController@deleteAdmin',  ['GET', 'POST']],
 
        // Customer Routes
        'customers/login_and_register' => ['CustomerController@login', ['GET', 'POST']],

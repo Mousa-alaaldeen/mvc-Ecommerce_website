@@ -579,9 +579,10 @@ class AdminController extends Controller
 
         $this->view('admin/category_edit', ['category' => $category]);
 
-        var_dump($_POST);
+        // var_dump($_POST);
         exit;
     }
+
 
     public function deleteCategory()
     {
@@ -600,6 +601,37 @@ class AdminController extends Controller
         exit;
     }
 
+
+    public function addAdmin()
+    {
+        $data = [
+            "username" => $_POST['username'] ?? null,
+            "email" => $_POST['email'] ?? null,
+            "password" => $_POST['password'] ?? null,
+            "role" => $_POST['role'] ?? 'admin',
+        ];
+    
+        $this->model('Admin')->create($data);
+    
+        $admins = $this->model('Admin')->all();
+        $this->view('admin/super_manage_admin', ['admins' => $admins]);
+    }
+    
+    public function deleteAdmin()
+    {
+        $id = $_POST['id'] ?? null;
+    
+        if (!$id || !$this->model('Admin')->find($id)) {
+            $_SESSION['error'] = "Admin not found!";
+        } else {
+            $this->model('Admin')->delete($id);
+            $_SESSION['message'] = "Admin deleted successfully!";
+        }
+    
+        $admins = $this->model('Admin')->all();
+        $this->view('admin/super_manage_admin', ['admins' => $admins]);
+    }
+    
 
 
 
@@ -632,22 +664,22 @@ class AdminController extends Controller
         $admins = $this->model('Admin')->all();
         $this->view('admin/super_manage_admin', ['admins' => $admins]);
     }
-    public function deleteAdmin()
-    {
-        $id = $_POST['adminId'] ?? null;
+    // public function deleteAdmin()
+    // {
+    //     $id = $_POST['adminId'] ?? null;
 
-        if (!$id || !$this->model('Admin')->find($id)) {
-            $_SESSION['error'] = "Admin not found!";
-            $admins = $this->model('Admin')->all();
-            $this->view('admin/super_manage_admin', ['admins' => $admins]);
-            return;
-        }
+    //     if (!$id || !$this->model('Admin')->find($id)) {
+    //         $_SESSION['error'] = "Admin not found!";
+    //         $admins = $this->model('Admin')->all();
+    //         $this->view('admin/super_manage_admin', ['admins' => $admins]);
+    //         return;
+    //     }
         
-        $this->model('Admin')->delete($id);
-        $_SESSION['message'] = "Admin deleted successfully!";
-        $admins = $this->model('Admin')->all();
-        $this->view('admin/super_manage_admin', ['admins' => $admins]);
-    }
+    //     $this->model('Admin')->delete($id);
+    //     $_SESSION['message'] = "Admin deleted successfully!";
+    //     $admins = $this->model('Admin')->all();
+    //     $this->view('admin/super_manage_admin', ['admins' => $admins]);
+    // }
 
     
 //     public function manageAdmin()
