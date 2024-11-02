@@ -631,7 +631,22 @@ class AdminController extends Controller
         $admins = $this->model('Admin')->all();
         $this->view('admin/super_manage_admin', ['admins' => $admins]);
     }
+
+    public function displayTestimonials() {
+        // استرجاع الشهادات
+        $testimonials = $this->model('Testimonial')->all();
+        
+        // استرجاع عدد الشهادات
+        $testimonialCount = $this->model('Testimonial')->getTestimonialsCount();
     
+        // تمرير البيانات إلى العرض
+        $this->view('admin/manage_testimonials', [
+            'testimonials' => $testimonials,
+            'testimonialCount' => $testimonialCount
+        ]);
+    }
+    
+
 
 
 

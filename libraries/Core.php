@@ -32,6 +32,7 @@ class Core
         'admin/customer_update' => ['AdminController@updateCustomer', 'POST','GET'], // Specify POST for updates
         'admin/customer_create' => ['AdminController@createCustomer', [ 'POST' , 'GET']],
         'admin/deleteCustomer' => ['AdminController@deleteCustomer', ['GET', 'POST']],
+        'admin/manage_testimonials' => ['AdminController@displayTestimonials', ['GET', 'POST']],
         
         
         
