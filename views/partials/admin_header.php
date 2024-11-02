@@ -264,7 +264,15 @@
 								<span class="nav-link-text">Orders</span>
 							</a><!--//nav-link-->
 						</li><!--//nav-item-->
-				
+						<li class="nav-item">
+    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+    <a class="nav-link" href="/admin/Review">
+        <span class="nav-icon">
+            <i class="fas fa-star"></i> <!-- Change this icon to an appropriate one for reviews -->
+        </span>
+        <span class="nav-link-text">Reviews</span>
+    </a><!--//nav-link-->
+</li><!--//nav-item-->
 						<li class="nav-item">
 							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 							<a class="nav-link" href="/admin/messages">

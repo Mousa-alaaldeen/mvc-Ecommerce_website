@@ -725,7 +725,41 @@ class AdminController extends Controller
 
 
 
-
+    public function manageReviews()
+    {
+        // Fetch all reviews from the Review model
+        $reviews = $this->model('ReviewModel')->all();
+    
+        // Pass the reviews data to the view
+        $this->view('admin/Review', ['reviews' => $reviews]);
+    }
+    public function removeReviewAdmin()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Validate that the review ID is provided
+            $reviewId = isset($_POST['reviewId']) ? intval($_POST['reviewId']) : 0;
+    
+            if ($reviewId > 0) {
+                // Call the model to delete the review
+                $result = $this->model('ReviewModel')->deleteReview($reviewId);
+    
+                if ($result) {
+                    // Set a success message
+                    $_SESSION['message'] = "Review removed successfully!";
+                } else {
+                    // Set an error message
+                    $_SESSION['error'] = "Error removing review. Please try again.";
+                }
+            } else {
+                $_SESSION['error'] = "Invalid review ID.";
+            }
+    
+            // Redirect back to the manage reviews page
+            header("Location: /admin/Review");
+            exit();
+        }
+    }
+    
 
 
     
@@ -805,5 +839,6 @@ class AdminController extends Controller
 
 // }
 }
+
 
 
