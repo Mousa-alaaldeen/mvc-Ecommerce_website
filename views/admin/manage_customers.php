@@ -157,12 +157,12 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                                     <?php
                                     $imageSrc = !empty($customer['image_url']) ? htmlspecialchars($customer['image_url']) : '/public/images/admin-user-profile.png';
                                     ?>
-                                    <img src="<?= $imageSrc; ?>" class="img-thumbnail" style="width: 30px; height: 30px;">
+                                    <img src="<?= $imageSrc; ?>" c style="width: 50px; height: 50px;">
                                 </td>
-                                <td class="text-truncate" style="max-width: 150px;">
+                                <td class="text-center" style="max-width: 150px;">
                                     <?php echo htmlspecialchars($customer['first_name']); ?>
                                 </td>
-                                <td class="text-truncate" style="max-width: 150px;">
+                                <td class="text-center" style="max-width: 150px;">
                                     <?php echo htmlspecialchars($customer['last_name']); ?>
                                 </td>
                                 <td class="text-truncate" style="max-width: 120px;">

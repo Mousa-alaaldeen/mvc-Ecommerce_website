@@ -194,10 +194,10 @@ $total_pages = ceil($total_items / $items_per_page);
 							<td><?php echo htmlspecialchars($product['id']); ?></td>
 							<td>
 								<?php
-								$imageSrc = !empty($product['image_url']) ? htmlspecialchars($product['image_url']) : 'path/to/placeholder-image.jpg';
+								$imageSrc = !empty($product['image_url']) ? '/public/' . htmlspecialchars($product['image_url']) : '/public/images/product.png';
 								?>
 
-								<img src="<?= $imageSrc; ?>" class="img-thumbnail" style="width: 30px; height: 30px;">
+								<img src="<?= $imageSrc; ?>" class="img-thumbnail" style="width: 70px; height: 70px;">
 							</td>
 							<td class="text-truncate" style="max-width: 150px;">
 								<?php
@@ -206,7 +206,7 @@ $total_pages = ceil($total_items / $items_per_page);
 								echo $formattedName;
 								?>
 							</td>
-							<td class="text-truncate" style="max-width: 150px;">
+							<td class="text-truncate " style="max-width: 150px;">
 								<?php echo htmlspecialchars($product['description']); ?>
 							</td>
 							<td>JD<?php echo number_format($product['price'], 2); ?></td>
