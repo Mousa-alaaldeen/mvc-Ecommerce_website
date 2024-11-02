@@ -669,7 +669,7 @@ class AdminController extends Controller
             'discount' => $_POST['discount'],
             'description' => $_POST['description'],
             'usage_limit' => $_POST['usage_limit'],
-            'expiration_date' => $_POST['expiration_date'] ?? 0, 
+            'expiration_date' => $_POST['expiration_date'] , 
         ];
     
         $this->model('Create')->create($data);

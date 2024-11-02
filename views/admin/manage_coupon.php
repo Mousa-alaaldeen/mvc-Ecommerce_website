@@ -29,16 +29,16 @@ $total_pages = ceil($total_items / $items_per_page);
 				<div class="col-auto">
 					<div class="page-utilities">
 						<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-							<div class="col-auto">
-								<form class="docs-search-form row gx-1 align-items-center" method="GET" action="">
-									<div class="col-auto">
-										<input type="text" id="search-docs" name="search"
-											value="<?= htmlspecialchars($search_query) ?>"
-											class="form-control search-docs" placeholder="Search">
-									</div>
-									<div class="col-auto">
-										<button type="submit" class="btn app-btn-secondary">Search</button>
-									</div>
+                        <div class="col-auto">
+								<form class="d-flex align-items-center" method="GET" action="">
+									<input type="text" id="search-docs" name="search"
+										value="<?= htmlspecialchars($search_query) ?>"
+										class="form-control rounded-pill border-primary me-2"
+										placeholder="Search Products..." aria-label="Search"
+										style=" border: 1px solid #d1e7dd;">
+									<button type="submit" class="btn btn-success rounded-pill">
+										<i class="fas fa-search text-white"></i>
+									</button>
 								</form>
 							</div>
 
@@ -137,16 +137,13 @@ $total_pages = ceil($total_items / $items_per_page);
             </td>
             <td>
             <div style="display: inline-flex; gap: 5px;">
-    <a href="/admin/coupon_edit/<?= htmlspecialchars($coupon['id']); ?>" class="btn btn-success btn-sm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-    <path d="M12 4.5C5.798 4.5 1 10.06 1 12s4.798 7.5 11 7.5S23 13.94 23 12 18.202 4.5 12 4.5zm0 11.5A4.501 4.501 0 017.5 12 4.501 4.501 0 0112 7.5 4.501 4.501 0 0116.5 12 4.501 4.501 0 0112 16zm0-7a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"></path>
-</svg>
+    <a href="/admin/coupon_edit/<?= htmlspecialchars($coupon['id']); ?>" class="btn btn-success btn-sm">  <i class="bi bi-pencil"></i>
 </a>
 
 <form action="/admin/deleteCoupon" method="POST" onsubmit="return confirm('Are you sure you want to delete this coupon? This action cannot be undone!')">
     <input type="hidden" name="id" value="<?= htmlspecialchars($coupon['id']); ?>">
-    <button type="submit" class="btn btn-danger btn-sm"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-  <path d="M6 6h12v2H6V6zm1 2v12c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V8H7zm8 2v10h-2V10h2zm-4 0v10h2V10h-2zm-4 0v10h2V10H7z" fill="currentColor"/>
-</svg>
+    <button type="submit" class="btn btn-danger btn-sm">  <i class="bi bi-trash"></i>
+
 </button>
 </form>
 
