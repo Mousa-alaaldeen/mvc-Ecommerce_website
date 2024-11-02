@@ -275,37 +275,7 @@
 								<span class="nav-link-text">testimonials</span>
 							</a><!--//nav-link-->
 						</li><!--//nav-item-->
-						<li class="nav-item has-submenu">
-							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
-								data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
-								<span class="nav-icon">
-									<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-columns-gap"
-										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-										<path fill-rule="evenodd"
-											d="M6 1H1v3h5V1zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm14 12h-5v3h5v-3zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5zM6 8H1v7h5V8zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H1zm14-6h-5v7h5V1zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1h-5z" />
-									</svg>
-								</span>
-								<span class="nav-link-text">External</span>
-								<span class="submenu-arrow">
-									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down"
-										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-										<path fill-rule="evenodd"
-											d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
-									</svg>
-								</span><!--//submenu-arrow-->
-							</a><!--//nav-link-->
-							<div id="submenu-2" class="collapse submenu submenu-2" data-bs-parent="#menu-accordion">
-								<ul class="submenu-list list-unstyled">
-									<li class="submenu-item"><a class="submenu-link" href="login.php">Login</a></li>
-									<li class="submenu-item"><a class="submenu-link" href="signup.html">Signup</a></li>
-									<li class="submenu-item"><a class="submenu-link" href="reset-password.html">Reset
-											password</a></li>
-									<li class="submenu-item"><a class="submenu-link" href="404.html">404 page</a></li>
-								</ul>
-							</div>
-						</li><!--//nav-item-->
+					
 						<li class="nav-item">
 							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 							<a class="nav-link" href="charts.html">
@@ -323,11 +293,9 @@
 							<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 							<a class="nav-link" href="/admin/super_manage_admin">
 								<span class="nav-icon">
-									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart-line"
-										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-										<path fill-rule="evenodd"
-											d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z" />
-									</svg>
+								<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gear" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				<path d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1zm3.784 7.99a5.946 5.946 0 0 1-1.272.2.742.742 0 0 0-.682.582 1.07 1.07 0 0 1-.316.643l-.37.37a5.37 5.37 0 0 1-.643.316.742.742 0 0 0-.582.682 5.951 5.951 0 0 1-.2 1.272 5.94 5.94 0 0 1-1.173 1.173 5.946 5.946 0 0 1-1.272.2.742.742 0 0 0-.682-.582 1.07 1.07 0 0 1-.643-.316l-.37-.37a5.37 5.37 0 0 1-.316-.643.742.742 0 0 0-.582-.682 5.951 5.951 0 0 1-1.272-.2 5.94 5.94 0 0 1-1.173-1.173 5.946 5.946 0 0 1-.2-1.272.742.742 0 0 0 .582-.682 1.07 1.07 0 0 1 .316-.643l.37-.37a5.37 5.37 0 0 1 .643-.316.742.742 0 0 0 .682-.582 5.951 5.951 0 0 1 .2-1.272 5.94 5.94 0 0 1 1.173-1.173 5.946 5.946 0 0 1 1.272-.2.742.742 0 0 0 .682.582 1.07 1.07 0 0 1 .643.316l.37.37a5.37 5.37 0 0 1 .316.643.742.742 0 0 0 .582.682 5.951 5.951 0 0 1 1.272.2 5.94 5.94 0 0 1 1.173 1.173 5.946 5.946 0 0 1 .2 1.272.742.742 0 0 0-.582.682 1.07 1.07 0 0 1-.316.643l-.37.37a5.37 5.37 0 0 1-.643.316.742.742 0 0 0-.682.582z"/>
+			</svg>
 								</span>
 								<span class="nav-link-text">Super Admin</span>
 							</a><!--//nav-link-->
