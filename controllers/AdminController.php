@@ -610,7 +610,6 @@ class AdminController extends Controller
     public function addAdmin()
     {
         $data = [
-            "username" => $_POST['username'] ?? null,
             "email" => $_POST['email'] ?? null,
             "password" => $_POST['password'] ?? null,
             "role" => $_POST['role'] ?? 'admin',

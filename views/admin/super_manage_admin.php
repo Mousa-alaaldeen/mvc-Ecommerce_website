@@ -1,7 +1,5 @@
 <?php require "views/partials/admin_header.php"; ?>
 
-<link href="/public/css/user_profile_style.css" rel="stylesheet">
-
 <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
@@ -20,7 +18,6 @@
                             <thead class="table-success">
                                 <tr class="text-center">
                                     <th>ID</th>
-                                    <th>Username</th>
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Actions</th>
@@ -30,13 +27,12 @@
                                 <?php foreach ($admins as $admin): ?>
                                     <tr class="text-center">
                                         <td><?php echo htmlspecialchars($admin['id']); ?></td>
-                                        <td><?php echo htmlspecialchars($admin['username']); ?></td>
                                         <td><?php echo htmlspecialchars($admin['email']); ?></td>
                                         <td><?php echo htmlspecialchars($admin['role']); ?></td>
                                         <td>
-                                            <form action="delete_admin" method="POST" class="d-inline">
+                                            <form action="delete_admin" method="POST" class="d-inline delete-admin-form">
                                                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($admin['id']); ?>">
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this admin?');">
+                                                <button type="button" class="btn btn-danger btn-sm delete-admin-btn">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                             </form>
@@ -56,11 +52,7 @@
                   
                     <div class="card shadow mb-5">
                         <div class="card-body">
-                            <form action="add_admin" method="POST">
-                                <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username" required>
-                                </div>
+                            <form id="addAdminForm" action="add_admin" method="POST">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="email" name="email" required>
@@ -86,3 +78,53 @@
         </div>
     </div>
 </div>
+
+<!-- SweetAlert Script -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // Handle SweetAlert for Add Admin Form
+    document.getElementById('addAdminForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Show SweetAlert for confirmation
+        Swal.fire({
+            title: 'Admin Added!',
+            text: 'The admin has been added successfully.',
+            icon: 'success',
+            confirmButtonColor: '#3B5D50',
+            timer: 1500
+        }).then(() => {
+            this.submit(); // Submit the form after the alert is closed
+        });
+    });
+
+    // Handle delete confirmation
+    document.querySelectorAll('.delete-admin-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const form = this.closest('.delete-admin-form');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#D26D69',
+                cancelButtonColor: '#5bb377',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setTimeout(() => {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'The user has been deleted.',
+                            icon: 'success',
+                            confirmButtonColor: '#3B5D50'
+                        }).then(() => {
+                            form.submit();
+                        });
+                    }, 300);
+                }
+            });
+        });
+    });
+</script>
