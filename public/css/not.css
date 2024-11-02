@@ -8,12 +8,9 @@
 }
 
 .card {
-    border: 2px solid transparent;
-    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s ease;
 }
 
 .card:hover {
-    border-color: #28a745; 
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
 }

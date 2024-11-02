@@ -1,5 +1,15 @@
 <?php
 require "views/partials/admin_header.php";
+$search_query = isset($_GET['search']) ? $_GET['search'] : '';
+$filtered_categories = array_filter($categories, function ($category) use ($search_query) {
+	return stripos($category['category_name'], $search_query) !== false 
+		;
+});
+
+if ($search_query === '') {
+	$filtered_categories = $categories;
+}
+
 
 $items_per_page = 20;
 $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
@@ -169,17 +179,25 @@ $paginated_categories = array_slice($filtered_categories, $start_index, $items_p
                     </tbody>
                 </table>
             </div>
-            <?php if ($total_pages > 1): ?>
-                <nav class="app-pagination">
-                    <ul class="pagination justify-content-center">
-                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                            <li class="page-item <?= $current_page === $i ? 'active' : ''; ?>">
-                                <a class="page-link" href="?page=<?= $i; ?>&search=<?= htmlspecialchars($search); ?>"><?= $i; ?></a>
-                            </li>
-                        <?php endfor; ?>
-                    </ul>
-                </nav>
-            <?php endif; ?>
+			<nav class="app-pagination ">
+				<ul class="pagination justify-content-center">
+					<li class="page-item <?= $current_page <= 1 ? 'disabled' : '' ?>">
+						<a class="page-link bg-primary text-white"
+							href="?page=<?= $current_page - 1 ?>&search=<?= urlencode($search_query) ?>" tabindex="-1"
+							aria-disabled="true">Previous</a>
+					</li>
+					<?php for ($page = 1; $page <= $total_pages; $page++): ?>
+						<li class="page-item <?= $page == $current_page ? 'active' : '' ?>">
+							<a class="page-link <?= $page == $current_page ? 'bg-success text-white' : 'bg-light text-dark' ?>"
+								href="?page=<?= $page ?>&search=<?= urlencode($search_query) ?>"><?= $page ?></a>
+						</li>
+					<?php endfor; ?>
+					<li class="page-item <?= $current_page >= $total_pages ? 'disabled' : '' ?>">
+						<a class="page-link bg-primary text-white"
+							href="?page=<?= $current_page + 1 ?>&search=<?= urlencode($search_query) ?>">Next</a>
+					</li>
+				</ul>
+			</nav>
         </div>
     </div>
 </div>
