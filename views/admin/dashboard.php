@@ -108,38 +108,23 @@
     </div>
 </div>
 
-	
-		<div class="row g-4 mb-4">
-			<div class="col-12">
-				<div class="app-card app-card-chart h-100 shadow-sm hover-animation">
-					<div class="app-card-header p-3">
-						<div class="row justify-content-between align-items-center">
-							<div class="col-auto">
-								<h4 class="app-card-title">Line Chart Example</h4>
-							</div>
-							<div class="col-auto">
-								<div class="card-header-action">
-									<a href="charts.html">More charts</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="app-card-body p-3 p-lg-4">
-						<div class="mb-3 d-flex">
-							<select class="form-select form-select-sm ms-auto d-inline-flex w-auto">
-								<option value="1" selected>This week</option>
-								<option value="2">Today</option>
-								<option value="3">This Month</option>
-								<option value="3">This Year</option>
-							</select>
-						</div>
-						<div class="chart-container">
-							<canvas id="canvas-linechart"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+
+<div class="col-12 mt-4 mb-4">
+    <div class="app-card app-card-chart h-100 shadow-sm">
+        <div class="app-card-header p-3 border-0">
+            <h4 class="app-card-title">Area Line Chart Demo</h4>
+        </div>
+        <div class="app-card-body p-3">
+            <div class="chart-container">
+                <canvas id="chart-line"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 
@@ -162,7 +147,7 @@
 						<div class="item p-3">
 							<div class="row align-items-center">
 								<div class="col">
-									<div class="title mb-1 ">Project lorem ipsum dolor sit amet</div>
+									<div class="title mb-1 ">Project Overview: Streamlining Operations for Increased Efficiency</div>
 									<div class="progress">
 										<div class="progress-bar bg-success" role="progressbar" style="width: 25%;"
 											aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
@@ -183,7 +168,7 @@
 						<div class="item p-3">
 							<div class="row align-items-center">
 								<div class="col">
-									<div class="title mb-1 ">Project duis aliquam et lacus quis ornare</div>
+									<div class="title mb-1 ">Project Goal: Enhancing User Experience Through Innovative Design</div>
 									<div class="progress">
 										<div class="progress-bar bg-success" role="progressbar" style="width: 34%;"
 											aria-valuenow="34" aria-valuemin="0" aria-valuemax="100"></div>
@@ -203,7 +188,7 @@
 						<div class="item p-3">
 							<div class="row align-items-center">
 								<div class="col">
-									<div class="title mb-1 ">Project sed tempus felis id lacus pulvinar</div>
+									<div class="title mb-1 ">Project Scope: Implementing Advanced Features for Greater Functionality</div>
 									<div class="progress">
 										<div class="progress-bar bg-success" role="progressbar" style="width: 68%;"
 											aria-valuenow="68" aria-valuemin="0" aria-valuemax="100"></div>
@@ -223,7 +208,7 @@
 						<div class="item p-3">
 							<div class="row align-items-center">
 								<div class="col">
-									<div class="title mb-1 ">Project sed tempus felis id lacus pulvinar</div>
+									<div class="title mb-1 ">Project Strategy: Driving Growth Through Data-Driven Insights</div>
 									<div class="progress">
 										<div class="progress-bar bg-success" role="progressbar" style="width: 52%;"
 											aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
@@ -334,81 +319,132 @@
 
 							</div><!--//col-->
 							<div class="col-auto">
-								<h4 class="app-card-title">Invoices</h4>
-							</div><!--//col-->
-						</div><!--//row-->
-					</div><!--//app-card-header-->
-					<div class="app-card-body px-4">
+    <h4 class="app-card-title">Invoices</h4>
+</div><!--//col-->
+</div><!--//row-->
+</div><!--//app-card-header-->
+<div class="app-card-body px-4">
+    <div class="intro">Manage all invoices efficiently. Keep track of payments, view outstanding amounts, and monitor payment statuses to ensure timely transactions.</div>
+</div><!--//app-card-body-->
+<div class="app-card-footer p-4 mt-auto">
+</div><!--//app-card-footer-->
+</div><!--//app-card-->
+</div><!--//col-->
 
-						<div class="intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam aliquet eros
-							vel diam semper mollis.</div>
-					</div><!--//app-card-body-->
-					<div class="app-card-footer p-4 mt-auto">
-					</div><!--//app-card-footer-->
-				</div><!--//app-card-->
-			</div><!--//col-->
-			<div class="col-12 col-lg-4">
-				<div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
-					<div class="app-card-header p-3 border-bottom-0">
-						<div class="row align-items-center gx-3">
-							<div class="col-auto">
-								<div class="app-icon-holder">
-									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-code-square"
-										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-										<path fill-rule="evenodd"
-											d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-										<path fill-rule="evenodd"
-											d="M6.854 4.646a.5.5 0 0 1 0 .708L4.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm2.292 0a.5.5 0 0 0 0 .708L11.793 8l-2.647 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0z" />
-									</svg>
-								</div><!--//icon-holder-->
+<div class="col-12 col-lg-4">
+    <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
+        <div class="app-card-header p-3 border-bottom-0">
+            <div class="row align-items-center gx-3">
+                <div class="col-auto">
+                    <div class="app-icon-holder">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-code-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                            <path fill-rule="evenodd" d="M6.854 4.646a.5.5 0 0 1 0 .708L4.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm2.292 0a.5.5 0 0 0 0 .708L11.793 8l-2.647 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0z" />
+                        </svg>
+                    </div><!--//icon-holder-->
+                </div><!--//col-->
+                <div class="col-auto">
+                    <h4 class="app-card-title">Apps</h4>
+                </div><!--//col-->
+            </div><!--//row-->
+        </div><!--//app-card-header-->
+        <div class="app-card-body px-4">
+            <div class="intro">Explore various applications integrated into the dashboard. Enhance productivity and streamline workflows with tools tailored for your business needs.</div>
+        </div><!--//app-card-body-->
+        <div class="app-card-footer p-4 mt-auto">
+        </div><!--//app-card-footer-->
+    </div><!--//app-card-->
+</div><!--//col-->
 
-							</div><!--//col-->
-							<div class="col-auto">
-								<h4 class="app-card-title">Apps</h4>
-							</div><!--//col-->
-						</div><!--//row-->
-					</div><!--//app-card-header-->
-					<div class="app-card-body px-4">
+<div class="col-12 col-lg-4">
+    <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
+        <div class="app-card-header p-3 border-bottom-0">
+            <div class="row align-items-center gx-3">
+                <div class="col-auto">
+                    <div class="app-icon-holder">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-tools" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M0 1l1-1 3.081 2.2a1 1 0 0 1 .419.815v.07a1 1 0 0 0 .293.708L10.5 9.5l.914-.305a1 1 0 0 1 1.023.242l3.356 3.356a1 1 0 0 1 0 1.414l-1.586 1.586a1 1 0 0 1-1.414 0l-3.356-3.356a1 1 0 0 1-.242-1.023L9.5 10.5 3.793 4.793a1 1 0 0 0-.707-.293h-.071a1 1 0 0 1-.814-.419L0 1zm11.354 9.646a.5.5 0 0 0-.708.708l3 3a.5.5 0 0 0 .708-.708l-3-3z" />
+                            <path fill-rule="evenodd" d="M15.898 2.223a3.003 3.003 0 0 1-3.679 3.674L5.878 12.15a3 3 0 1 1-2.027-2.027l6.252-6.341A3 3 0 0 1 13.778.1l-2.142 2.142L12 4l1.757.364 2.141-2.141zm-13.37 9.019L3.001 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026z" />
+                        </svg>
+                    </div><!--//icon-holder-->
+                </div><!--//col-->
+                <div class="col-auto">
+                    <h4 class="app-card-title">Tools</h4>
+                </div><!--//col-->
+            </div><!--//row-->
+        </div><!--//app-card-header-->
+        <div class="app-card-body px-4">
+            <div class="intro">Access essential tools for system management and development. Utilize these resources to optimize your processes and improve operational efficiency.</div>
+        </div><!--//app-card-body-->
+        <div class="app-card-footer p-4 mt-auto">
+        </div><!--//app-card-footer-->
+    </div><!--//app-card-->
+</div><!--//col-->
 
-						<div class="intro">Pellentesque varius, elit vel volutpat sollicitudin, lacus quam efficitur
-							augue</div>
-					</div><!--//app-card-body-->
-					<div class="app-card-footer p-4 mt-auto">
-					</div><!--//app-card-footer-->
-				</div><!--//app-card-->
-			</div><!--//col-->
-			<div class="col-12 col-lg-4">
-				<div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
-					<div class="app-card-header p-3 border-bottom-0">
-						<div class="row align-items-center gx-3">
-							<div class="col-auto">
-								<div class="app-icon-holder">
-									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-tools"
-										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-										<path fill-rule="evenodd"
-											d="M0 1l1-1 3.081 2.2a1 1 0 0 1 .419.815v.07a1 1 0 0 0 .293.708L10.5 9.5l.914-.305a1 1 0 0 1 1.023.242l3.356 3.356a1 1 0 0 1 0 1.414l-1.586 1.586a1 1 0 0 1-1.414 0l-3.356-3.356a1 1 0 0 1-.242-1.023L9.5 10.5 3.793 4.793a1 1 0 0 0-.707-.293h-.071a1 1 0 0 1-.814-.419L0 1zm11.354 9.646a.5.5 0 0 0-.708.708l3 3a.5.5 0 0 0 .708-.708l-3-3z" />
-										<path fill-rule="evenodd"
-											d="M15.898 2.223a3.003 3.003 0 0 1-3.679 3.674L5.878 12.15a3 3 0 1 1-2.027-2.027l6.252-6.341A3 3 0 0 1 13.778.1l-2.142 2.142L12 4l1.757.364 2.141-2.141zm-13.37 9.019L3.001 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026z" />
-									</svg>
-								</div><!--//icon-holder-->
-
-							</div><!--//col-->
-							<div class="col-auto">
-								<h4 class="app-card-title">Tools</h4>
-							</div><!--//col-->
-						</div><!--//row-->
-					</div><!--//app-card-header-->
-					<div class="app-card-body px-4">
-
-						<div class="intro">Sed maximus, libero ac pharetra elementum, turpis nisi molestie neque, et
-							tincidunt velit turpis non enim.</div>
-					</div><!--//app-card-body-->
-					<div class="app-card-footer p-4 mt-auto">
-					</div><!--//app-card-footer-->
-				</div><!--//app-card-->
-			</div><!--//col-->
-		</div><!--//row-->
-
-	</div><!--//container-fluid-->
-</div><!--//app-content-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const ctx = document.getElementById('chart-line').getContext('2d');
+
+    // Create gradient for the chart fill color
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(75,192,192,0.4)');
+    gradient.addColorStop(1, 'rgba(75,192,192,0)');
+
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: 'Monthly Data',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                backgroundColor: gradient,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: true, // Enables the area fill below the line
+                tension: 0.4 // Smoothing effect for the line
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+});
+</script>
+<style>
+	.chart-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
+}
+
+.app-card-chart {
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.app-card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.app-card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #495057;
+}
+
+</style>
