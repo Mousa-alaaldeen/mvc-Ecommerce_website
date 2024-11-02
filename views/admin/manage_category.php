@@ -2,12 +2,12 @@
 require "views/partials/admin_header.php";
 $search_query = isset($_GET['search']) ? $_GET['search'] : '';
 $filtered_categories = array_filter($categories, function ($category) use ($search_query) {
-	return stripos($category['category_name'], $search_query) !== false 
-		;
+    return stripos($category['category_name'], $search_query) !== false
+    ;
 });
 
 if ($search_query === '') {
-	$filtered_categories = $categories;
+    $filtered_categories = $categories;
 }
 
 
@@ -22,7 +22,7 @@ $start_index = ($current_page - 1) * $items_per_page;
 
 
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-$filtered_categories = []; 
+$filtered_categories = [];
 if (!empty($search)) {
 
     if (is_array($categories)) {
@@ -46,16 +46,17 @@ $paginated_categories = array_slice($filtered_categories, $start_index, $items_p
 <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
-		<?php if (isset($_SESSION['message'])): ?>
+            <?php if (isset($_SESSION['message'])): ?>
                 <div class="alert alert-success"><?= htmlspecialchars($_SESSION['message']); ?></div>
-                <?php unset($_SESSION['message']);  ?>
+                <?php unset($_SESSION['message']); ?>
             <?php endif; ?>
             <div class="row g-3 mb-4 align-items-center justify-content-between shadow-sm p-3 bg-light rounded">
 
                 <div class="col-auto">
                     <h1 class="app-page-title mb-0 text-success fw-bold"
                         style="font-size: 2rem; text-shadow: 1px 1px 2px #d4edda;">
-                        <i class="fas fa-users me-3"></i>categories
+                        <i class="fas fa-tags me-3"></i>Category
+                    
                     </h1>
                 </div>
 
@@ -96,7 +97,8 @@ $paginated_categories = array_slice($filtered_categories, $start_index, $items_p
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-					<form id="createCategoryForm" method="POST" enctype="multipart/form-data" onsubmit="submitCategoryForm(event)">
+                        <form id="createCategoryForm" method="POST" enctype="multipart/form-data"
+                            onsubmit="submitCategoryForm(event)">
 
                             <div class="modal-header p-0">
                                 <div
@@ -111,21 +113,24 @@ $paginated_categories = array_slice($filtered_categories, $start_index, $items_p
                                 <div class="row mb-3">
                                     <div class="col">
                                         <label for="category_name" class="form-label">Category Name</label>
-                                        <input type="text" class="form-control" id="category_name" name="category_name" required>
+                                        <input type="text" class="form-control" id="category_name" name="category_name"
+                                            required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
                                         <label for="image_url" class="form-label">image url</label>
-										<input type="file" class="form-control" id="image_url" name="image_url" required >
+                                        <input type="file" class="form-control" id="image_url" name="image_url"
+                                            required>
 
                                     </div>
                                 </div>
-                        
+
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn app-btn-primary">Create category</button>
-                                <button type="button" class="btn btn-danger text-white" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger text-white"
+                                    data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -137,10 +142,9 @@ $paginated_categories = array_slice($filtered_categories, $start_index, $items_p
                     <thead class="table-success">
                         <tr class="text-center">
                             <th>ID</th>
+                            <th>Image </th>
                             <th>Category Name</th>
-                            <th>Image URL</th>
-                         
-                            <th>Actions</th>
+                           <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -149,97 +153,100 @@ $paginated_categories = array_slice($filtered_categories, $start_index, $items_p
                                 <td><?php echo htmlspecialchars($category['id']); ?></td>
                                 <td>
                                     <?php
-                                    $imageSrc = !empty($category['image_url']) ? htmlspecialchars($category['image_url']) : '/public/images/admin-user-profile.png';
+                                    $imageSrc = !empty($category['image_url']) ?"/public/".htmlspecialchars($category['image_url']) : '/public/images/mousa.png';
                                     ?>
-                                    <img src="<?= $imageSrc; ?>" class="img-thumbnail" style="width: 30px; height: 30px;">
+                                    <img src="<?= $imageSrc; ?>" class="" style="width: 70px; height: 70px;">
                                 </td>
+
                                 <td class="text-truncate" style="max-width: 150px;">
                                     <?php echo htmlspecialchars($category['category_name']); ?>
                                 </td>
-                             
-								<td class="text-center">
-    <div class="d-flex justify-content-center">
-        <a href="/admin/category_edit/<?= htmlspecialchars($category['id']); ?>" class="btn btn-success btn-sm me-2">
-            <i class="bi bi-pencil"></i>
-        </a>
-        <form id="deleteForm-<?= htmlspecialchars($category['id']); ?>"
-            action="/admin/deleteCategory" method="POST"
-            onsubmit="return confirmDelete(event, '<?= htmlspecialchars($category['id']); ?>')"
-            class="ms-2">
-            <input type="hidden" name="categoryId" value="<?= htmlspecialchars($category['id']); ?>">
-            <button type="submit" class="btn btn-danger btn-sm">
-                <i class="bi bi-trash"></i>
-            </button>
-        </form>
-    </div>
-</td>
+                               
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center">
+                                        <a href="/admin/category_edit/<?= htmlspecialchars($category['id']); ?>"
+                                            class="btn btn-success btn-sm me-2">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <form id="deleteForm-<?= htmlspecialchars($category['id']); ?>"
+                                            action="/admin/deleteCategory" method="POST"
+                                            onsubmit="return confirmDelete(event, '<?= htmlspecialchars($category['id']); ?>')"
+                                            class="ms-2">
+                                            <input type="hidden" name="categoryId"
+                                                value="<?= htmlspecialchars($category['id']); ?>">
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
 
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-			<nav class="app-pagination ">
-				<ul class="pagination justify-content-center">
-					<li class="page-item <?= $current_page <= 1 ? 'disabled' : '' ?>">
-						<a class="page-link bg-primary text-white"
-							href="?page=<?= $current_page - 1 ?>&search=<?= urlencode($search_query) ?>" tabindex="-1"
-							aria-disabled="true">Previous</a>
-					</li>
-					<?php for ($page = 1; $page <= $total_pages; $page++): ?>
-						<li class="page-item <?= $page == $current_page ? 'active' : '' ?>">
-							<a class="page-link <?= $page == $current_page ? 'bg-success text-white' : 'bg-light text-dark' ?>"
-								href="?page=<?= $page ?>&search=<?= urlencode($search_query) ?>"><?= $page ?></a>
-						</li>
-					<?php endfor; ?>
-					<li class="page-item <?= $current_page >= $total_pages ? 'disabled' : '' ?>">
-						<a class="page-link bg-primary text-white"
-							href="?page=<?= $current_page + 1 ?>&search=<?= urlencode($search_query) ?>">Next</a>
-					</li>
-				</ul>
-			</nav>
+            <nav class="app-pagination ">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item <?= $current_page <= 1 ? 'disabled' : '' ?>">
+                        <a class="page-link bg-primary text-white"
+                            href="?page=<?= $current_page - 1 ?>&search=<?= urlencode($search_query) ?>" tabindex="-1"
+                            aria-disabled="true">Previous</a>
+                    </li>
+                    <?php for ($page = 1; $page <= $total_pages; $page++): ?>
+                        <li class="page-item <?= $page == $current_page ? 'active' : '' ?>">
+                            <a class="page-link <?= $page == $current_page ? 'bg-success text-white' : 'bg-light text-dark' ?>"
+                                href="?page=<?= $page ?>&search=<?= urlencode($search_query) ?>"><?= $page ?></a>
+                        </li>
+                    <?php endfor; ?>
+                    <li class="page-item <?= $current_page >= $total_pages ? 'disabled' : '' ?>">
+                        <a class="page-link bg-primary text-white"
+                            href="?page=<?= $current_page + 1 ?>&search=<?= urlencode($search_query) ?>">Next</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
 <script>
-function submitCategoryForm(event) {
-    event.preventDefault(); // Prevent the default form submission
+    function submitCategoryForm(event) {
+        event.preventDefault(); // Prevent the default form submission
 
-    var formData = new FormData(document.getElementById('createCategoryForm'));
+        var formData = new FormData(document.getElementById('createCategoryForm'));
 
-    fetch('/admin/category_create', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: data.message,
-            }).then(() => {
-                // Optionally refresh the page or update the category list
-                location.reload(); // Reloads the page
+        fetch('/admin/category_create', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: data.message,
+                    }).then(() => {
+                        // Optionally refresh the page or update the category list
+                        location.reload(); // Reloads the page
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message,
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An unexpected error occurred. Please try again later.',
+                });
             });
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: data.message,
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'An unexpected error occurred. Please try again later.',
-        });
-    });
-}
-function confirmDelete(create, id) {
+    }
+    function confirmDelete(create, id) {
         create.preventDefault();
         Swal.fire({
             title: "Are you sure?",
