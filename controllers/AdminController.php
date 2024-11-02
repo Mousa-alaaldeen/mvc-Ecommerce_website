@@ -632,6 +632,24 @@ class AdminController extends Controller
         $admins = $this->model('Admin')->all();
         $this->view('admin/super_manage_admin', ['admins' => $admins]);
     }
+    public function deleteAdmin()
+    {
+        $id = $_POST['adminId'] ?? null;
+
+        if (!$id || !$this->model('Admin')->find($id)) {
+            $_SESSION['error'] = "Admin not found!";
+            $admins = $this->model('Admin')->all();
+            $this->view('admin/super_manage_admin', ['admins' => $admins]);
+            return;
+        }
+        
+        $this->model('Admin')->delete($id);
+        $_SESSION['message'] = "Admin deleted successfully!";
+        $admins = $this->model('Admin')->all();
+        $this->view('admin/super_manage_admin', ['admins' => $admins]);
+    }
+
+    
 //     public function manageAdmin()
 //     {
 //         header('Location: /admin/dashboard');

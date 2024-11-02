@@ -12,18 +12,25 @@ $start_index = ($current_page - 1) * $items_per_page;
 
 // Check if search term is set and not empty
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-if (!empty($search) && is_array($customers)) {
-    // Filter customers based on search term
-    $filtered_customers = array_filter($customers, function ($customer) use ($search) {
-        return stripos($customer['first_name'], $search) !== false ||
-            stripos($customer['last_name'], $search) !== false ||
-            stripos($customer['email'], $search) !== false ||
-            stripos($customer['phone_number'], $search) !== false ||
-            stripos($customer['address'], $search) !== false;
-    });
+$filtered_customers = []; // Initialize to an empty array
+
+if (!empty($search)) {
+    // Ensure $customers is an array before filtering
+    if (is_array($customers)) {
+        // Filter customers based on search term
+        $filtered_customers = array_filter($customers, function ($customer) use ($search) {
+            return stripos($customer['first_name'], $search) !== false ||
+                stripos($customer['last_name'], $search) !== false ||
+                stripos($customer['email'], $search) !== false ||
+                stripos($customer['phone_number'], $search) !== false ||
+                stripos($customer['address'], $search) !== false;
+        });
+    }
 } else {
-    $filtered_customers = $customers ?? []; // Ensure $filtered_customers is an array
+    // If no search term is provided, use the original customers array
+    $filtered_customers = is_array($customers) ? $customers : [];
 }
+
 
 // Update pagination logic after filtering
 $total_items = count($filtered_customers);
@@ -120,7 +127,7 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn app-btn-primary">Create Customer</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger text-white" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -220,10 +227,62 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
         </div>
     </div>
 </div>
+<script>
+  function confirmDelete(e, id) {
+    e.preventDefault(); 
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById("deleteForm-" + id).submit();
+            Swal.fire("Deleted!", "The customer has been deleted.", "success");
+        }
+    });
+}
+
+document.querySelectorAll('.delete-button').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const id = button.dataset.id; 
+        confirmDelete(e, id);
+    });
+</script>
 
 <script>
-    function confirmDelete(event, id) {
-        event.preventDefault();
+    document.getElementById('createCustomerForm').addEventListener('submit', function(create) {
+        create.preventDefault(); // Prevent the default form submission
+
+        // Get values from the input fields
+        var firstName = document.getElementById('first_name').value.trim();
+        var lastName = document.getElementById('last_name').value.trim();
+        var email = document.getElementById('email').value.trim();
+        var password = document.getElementById('password').value.trim();
+        var phoneNumber = document.getElementById('phone_number').value.trim();
+
+        // Check if any of the required fields are empty
+        if (!firstName || !lastName || !email || !password || !phoneNumber) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Error!',
+                confirmButtonColor: "#d98380",
+                cancelButtonColor: "#d98380",
+                text: 'Please fill out all required fields!',
+                confirmButtonText: 'OK'
+            });
+            return; // Exit the function
+        }
+
+        // If all fields are filled, submit the form
+        this.submit();
+    });
+
+    function confirmDelete(create, id) {
+        create.preventDefault();
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -240,5 +299,13 @@ $paginated_customers = array_slice($filtered_customers, $start_index, $items_per
         });
     }
 </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
 <?php require "views/partials/admin_footer.php"; ?>
