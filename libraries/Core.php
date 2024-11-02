@@ -11,9 +11,14 @@ class Core
         'admin/dashboard' => ['AdminController@dashboard', 'GET'],
         'admin/manage_category' => ['AdminController@manageCategory', 'GET'],
         'admin/manage_products' => ['AdminController@manageProducts', 'GET'],
-       'admin/manage_orders' => ['AdminController@manageOrders', 'GET'],
+        'admin/manage_orders' => ['AdminController@manageOrders', 'GET'],
         'admin/manage_customers' => ['AdminController@manageCustomers', [ 'POST' , 'GET'] ],
         'admin/manage_coupon' => ['AdminController@manageCoupon', 'GET'],
+        'admin/coupon_create' => ['AdminController@createCoupon', ['POST', 'GET']],
+
+        'admin/coupon_edit' => ['AdminController@editCoupon', 'GET'], // Specify POST for updates
+        'admin/coupon_update' => ['AdminController@updateCoupon', 'POST'], // Specify POST for updates
+        'admin/deleteCoupon' => ['AdminController@deleteCoupon', ['GET', 'POST']],
         'admin/messages' => ['AdminController@messages', 'GET'],
         'admin/account_settings' => ['AdminController@accountSettings', ['GET', 'POST']],
         'admin/logout' => ['AdminController@logout', 'GET'],

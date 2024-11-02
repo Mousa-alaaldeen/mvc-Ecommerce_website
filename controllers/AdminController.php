@@ -310,11 +310,11 @@ class AdminController extends Controller
     }
 
     // Manage coupons
-    public function manageCoupon()
-    {
-        $coupons = $this->model('Coupon')->getAllCoupons();
-        $this->view('admin/manage_coupon', ['coupons' => $coupons]);
-    }
+    // public function manageCoupon()
+    // {
+    //     $coupons = $this->model('Coupon')->getAllCoupons();
+    //     $this->view('admin/manage_coupon', ['coupons' => $coupons]);
+    // }
 
     // Handle messages
     // public function messages()
@@ -637,19 +637,83 @@ class AdminController extends Controller
     }
 
     public function displayTestimonials() {
-        // استرجاع الشهادات
+    
         $testimonials = $this->model('Testimonial')->all();
         
-        // استرجاع عدد الشهادات
+
         $testimonialCount = $this->model('Testimonial')->getTestimonialsCount();
     
-        // تمرير البيانات إلى العرض
+ 
         $this->view('admin/manage_testimonials', [
             'testimonials' => $testimonials,
             'testimonialCount' => $testimonialCount
         ]);
     }
     
+    // coupons 
+
+    public function manageCoupon()
+    {
+        $coupons = $this->model('Coupon')->All();
+        $this->view('admin/manage_coupon', ['coupons' => $coupons]);
+    }
+    public function editCoupon($id) {
+        $coupon = $this->model('Coupon')->find($id);
+        $this->view('admin/coupon_edit', ['coupon' => $coupon]);
+    }
+    public function createCoupon()
+    {
+    
+        $data = [
+            'code' => $_POST['code'],
+            'discount' => $_POST['discount'],
+            'description' => $_POST['description'],
+            'usage_limit' => $_POST['usage_limit'],
+            'expiration_date' => $_POST['expiration_date'] ?? 0, 
+        ];
+    
+        $this->model('Create')->create($data);
+        $_SESSION['message'] = "Coupon created successfully!";
+        header('Location: /admin/manage_coupon');
+        exit;
+    }
+    
+    public function updateCoupon($id) {
+        $data= [
+            'code' => $_POST['code'],
+            'discount' => $_POST['discount'],
+            'usage_limit' => $_POST['usage_limit'],
+            'expiration_date' => $_POST['expiration_date'],
+        ];
+        
+        $coupon = $this->model('Coupon')->find($id);
+        
+        $this->model('Coupon')->update($id, $data);
+    
+        $_SESSION['message'] = "Coupon updated successfully!";
+        
+        $this->view('admin/coupon_edit', ['coupon' => $coupon]);
+    
+        var_dump($_POST);
+        exit;
+    }
+    
+    public function deleteCoupon()
+    {
+        $id = $_POST['id'] ?? null;
+    
+        if (!$id || !$this->model('Coupon')->find($id)) {
+            $_SESSION['error'] = "Coupon not found!";
+            header("Location: /admin/manage_coupon");
+            exit;
+        }
+    
+        $this->model('Coupon')->delete($id);
+    
+        $_SESSION['message'] = "Coupon deleted successfully!";
+        header("Location: /admin/manage_coupon");
+        exit;
+    }
 
 
 
