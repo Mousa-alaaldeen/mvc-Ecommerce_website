@@ -1,4 +1,4 @@
-# Buy – E-commerce Furniture Store
+# NEST & Buy
 
 **An e-commerce platform developed for furniture sales, featuring a dynamic catalog, shopping cart, and secure checkout functionality.**
 
